@@ -106,8 +106,9 @@ def main():
 
 
     print("pid // command selected")
-    print (type(args.pid))
+    print (type(proc))
     print (args.pid)
+
 
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)

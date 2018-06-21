@@ -260,7 +260,6 @@ class ProcessTreeMonitor():
         # iterate over children and update their values
         children_process_list = self.parent_proc.children(recursive=True)
         for children_process in children_process_list:
-            print("CHILDREN : " + str(children_process))
             try:
                 self.update_values(children_process)
             except:
