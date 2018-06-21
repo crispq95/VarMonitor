@@ -153,27 +153,22 @@ class CumulativeVarMonitor(VarMonitor):
 
 
 class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
-    
     def get_process_value(self, some_process):
         return some_process.io_counters().read_chars
         
         
 class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
-    
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars        
 
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
-    
     def get_process_value(self, some_process):
         cpu_times = some_process.cpu_times()
         return cpu_times.user + cpu_times.system 
 
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
-    
     def __init__(self, name, proc_monitor):
-        
         super(TotalHS06Monitor, self).__init__(name, proc_monitor)
         
         # Get HS06 factor
@@ -188,7 +183,6 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     
     
     def get_process_value(self, some_process):
-        
         # get CPU time
         cpu_times = some_process.cpu_times()
         
@@ -212,7 +206,6 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 class ProcessTreeMonitor():
     
     def __init__(self, proc, var_list, **kwargs):
-        
         self.parent_proc = proc
         self.kwargs = kwargs
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
