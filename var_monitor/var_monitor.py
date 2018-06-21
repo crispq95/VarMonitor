@@ -227,7 +227,9 @@ class ProcessTreeMonitor():
         self.lock = threading.RLock()
     
     def update_values(self, some_process):
+        print ("MIAU")
         for monitor in self.monitor_list:
+            print ("updating value for"+str(monitor))
             monitor.update_value(some_process)
     
     def update_report_values(self):
@@ -256,9 +258,11 @@ class ProcessTreeMonitor():
         return 'timestamp,' + ','.join([monit.name for monit in self.monitor_list]) + '\n'
     
     def update_all_values(self):
-        
         # get var values from parent process
+        print("Geting var values from parent process ...")
         self.update_values(self.parent_proc)
+
+        print ("DONE !")
 
         # iterate over children and update their values
         children_process_list = self.parent_proc.children(recursive=True)
