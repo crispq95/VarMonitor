@@ -286,13 +286,13 @@ class ProcessTreeMonitor():
             self.lock.release()
     
     def start(self):
-        
+        print ("START ! ")
         self._log_file.write(self.get_headers())
         
         time_report = datetime.datetime.now()
     
         while self.proc_is_running():
-    
+            print ("Dentro while -- process is running !")
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
@@ -306,7 +306,8 @@ class ProcessTreeMonitor():
                 time_report = now
     
             time.sleep(self.check_lapse)
-    
+
+        print ("END ! ")
         self.parent_proc.wait()
         
         
