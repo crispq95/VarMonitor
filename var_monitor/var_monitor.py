@@ -255,8 +255,6 @@ class ProcessTreeMonitor():
         print("Geting var values from parent process ...")
         self.update_values(self.parent_proc)
 
-        print ("DONE !")
-
         # iterate over children and update their values
         children_process_list = self.parent_proc.children(recursive=True)
         for children_process in children_process_list:
