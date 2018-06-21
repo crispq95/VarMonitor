@@ -228,7 +228,7 @@ class ProcessTreeMonitor():
     
     def update_values(self, some_process):
         print ("MIAU")
-        for monitor in self.:monitor_list
+        for monitor in self.monitor_list
             print ("updating value for"+str(monitor[0]))
             monitor.update_value(some_process)
     
