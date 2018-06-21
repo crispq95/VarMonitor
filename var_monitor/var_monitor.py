@@ -263,6 +263,7 @@ class ProcessTreeMonitor():
         # iterate over children and update their values
         children_process_list = self.parent_proc.children(recursive=True)
         for children_process in children_process_list:
+            print("CHILDREN : " + str(children_process))
             try:
                 self.update_values(children_process)
             except:
@@ -297,7 +298,8 @@ class ProcessTreeMonitor():
                 self.update_all_values()
             except psutil.AccessDenied:
                 pass
-    
+
+
             # print usage if needed
             now = datetime.datetime.now()
             if (now - time_report).total_seconds() > self.report_lapse:
@@ -312,7 +314,6 @@ class ProcessTreeMonitor():
         
         
     def proc_is_running(self):
-        
-        return self.parent_proc.is_running() and self.parent_proc.status() != psutil.STATUS_ZOMBIE 
+        return self.parent_proc.is_running() and self.parent_proc.status() != psutil.STATUS_ZOMBIE
     
 
