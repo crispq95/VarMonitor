@@ -52,6 +52,8 @@ def modify_args(elem):
 
 
 def main():
+    print("Empezamos !!")
+    print(" ")
     args = parse_main_args()
     
     # Load configuration
