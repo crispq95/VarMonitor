@@ -63,7 +63,9 @@ def main():
         conf_file = '/etc/run_and_monitorize/run_and_monitorize.cfg'
     config = ConfigParser.ConfigParser()
     config.read(conf_file)
-    
+
+    print("Config file seleccionada")
+
     # Configure logging
     # Get logging directory
     if config.has_option('logging', 'logdir'):
@@ -75,9 +77,10 @@ def main():
     if config.has_option('logging', 'logfile'):
         logfile = config.get('logging', 'logfile')
     else:
-        logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)    
-    
-    
+        logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)
+
+    print("Log file seleccionada")
+
     # Get the process to be monitorized
     if args.pid and args.command:
         raise Exception('Both --pid and --command provided. Only one of those parameters accepted')    
@@ -101,6 +104,9 @@ def main():
             cmd_args, unknown = parse_cmd_args(command_list)
             logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
 
+
+    print("pid // command selected")
+
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)
     
@@ -109,8 +115,17 @@ def main():
     if 'total_HS06' in monit_kwargs['var_list']:
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
     monit_kwargs['log_file'] = whole_logfile
+
+    print("Creating monitor var...")
     monitor = ProcessTreeMonitor(proc, **monit_kwargs)
+
+    print(" ")
+    print("Start monitor !")
+    print(" ")
     monitor.start()
+
+    print(" FINISHED -- congrats <3 ")
+    print(" ")
     
     # When the process has been created by the monitor propagate the exit status
     if hasattr(proc, 'returncode'):

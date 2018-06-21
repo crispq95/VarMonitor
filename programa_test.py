@@ -4,7 +4,6 @@ import time
 import math
 
 # import setup
-
 max_x = 10000
 max_y = 10000
 
