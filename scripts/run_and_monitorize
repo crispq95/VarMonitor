@@ -2,7 +2,8 @@
 # Handle renaming of ConfigParser from python 2 to 3
 try:
     import ConfigParser
-except ModuleNotFoundError:
+except Exception as err :
+    print (err)
     import configparser as ConfigParser
 
 import argparse
