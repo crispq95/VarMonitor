@@ -114,8 +114,8 @@ def main():
         print (" ")
 
         #Handle the additional case when the logdir is defined inside the command
-        if config.has_option('logging', 'logdir_implicit') and \
-        config.getboolean('logging', 'logdir_implicit'):
+        if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
+            print (parse_cmd_args(command_list))
             cmd_args, unknown = parse_cmd_args(command_list)
             logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
 
