@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# Handle renaming of configparser from python 2 to 3
+# Handle renaming of ConfigParser from python 2 to 3
 try:
-    import configparser
+    import ConfigParser
 except ModuleNotFoundError:
-    import configparser as configparser
+    import configparser as ConfigParser
 
 import argparse
 import shlex
@@ -61,7 +61,7 @@ def main():
         conf_file = args.conf
     else:
         conf_file = '/etc/run_and_monitorize/run_and_monitorize.cfg'
-    config = configparser.configparser()
+    config = ConfigParser.ConfigParser()
     config.read(conf_file)
 
     print("Config file seleccionada")
