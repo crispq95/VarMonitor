@@ -110,15 +110,15 @@ def main():
 
 
     print("pid // command selected")
-    print (type(proc))
-    print (args.pid)
+    #print (type(proc))
+    #print (args.pid)
 
 
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)
     
     # Initialize and start the Monitor
-    monit_kwargs = dict(map(modify_args, config.items('root')))    
+    monit_kwargs = dict(map(modify_args, config.items('cperalta')))
     if 'total_HS06' in monit_kwargs['var_list']:
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
     monit_kwargs['log_file'] = whole_logfile
