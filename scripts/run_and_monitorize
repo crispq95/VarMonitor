@@ -115,8 +115,10 @@ def main():
 
         #Handle the additional case when the logdir is defined inside the command
         if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
+            print ("CMM l")
             print (parse_cmd_args(command_list))
             cmd_args, unknown = parse_cmd_args(command_list)
+            print (" ")
             logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
 
 
