@@ -126,6 +126,8 @@ def main():
         print (config.has_option('logging', 'logdir_implicit'))
 
         print ("Boolean : ")
+
+        print (config)
         print (config.getboolean('logging', 'logdir_implicit'))
         if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
             print ("CMM l")
