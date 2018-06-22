@@ -197,8 +197,8 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
 
 VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('max_rss', MaxRSSMonitor),
-            ('total_io_read', TotalIOReadMonitor),
-            ('total_io_write', TotalIOWriteMonitor),
+           # ('total_io_read', TotalIOReadMonitor),
+            #('total_io_write', TotalIOWriteMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
             ('total_HS06', TotalHS06Monitor)])
 
