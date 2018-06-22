@@ -91,6 +91,8 @@ def main():
         print ("Default log adress ")
         logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)
 
+        print (logfile)
+
     print("Log file seleccionada")
 
     # Get the process to be monitorized
