@@ -16,7 +16,7 @@ import uuid
 import sys
 print(sys.path)
 
-from var_monitor import ProcessTreeMonitor
+from .var_monitor import ProcessTreeMonitor
 
 CHECK_LAPSE = 0 # time between each usage check in seconds
 REPORT_LAPSE = 1 # time between each usage print in seconds
