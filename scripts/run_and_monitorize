@@ -68,6 +68,7 @@ def main():
     config = ConfigParser.ConfigParser()
 
     print ("Reading file... ")
+    print (conf_file)
     config.read(conf_file)
 
     print (config.read(conf_file))
