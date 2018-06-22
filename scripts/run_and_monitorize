@@ -64,9 +64,14 @@ def main():
     if args.conf:
         conf_file = args.conf
     else:
-        conf_file = '/etc/run_and_monitorize/run_and_monitorize.cfg'
+        conf_file = r'/etc/run_and_monitorize/run_and_monitorize.cfg'
     config = ConfigParser.ConfigParser()
+
+    print ("Reading file... ")
     config.read(conf_file)
+
+    print (config.read(conf_file))
+    print (" ")
 
     print("Config file seleccionada")
 
