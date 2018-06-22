@@ -3,7 +3,9 @@
 try:
     import ConfigParser
 except Exception as err :
+    print ("Error name :")
     print (err)
+    print (" ")
     import configparser as ConfigParser
 
 import argparse
