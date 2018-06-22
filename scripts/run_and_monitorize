@@ -6,6 +6,7 @@ except Exception as err :
     print ("Error name :")
     print (err)
     print (" ")
+    print("MIAU")
     import configparser as ConfigParser
 
 import argparse
