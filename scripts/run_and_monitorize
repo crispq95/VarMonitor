@@ -85,8 +85,10 @@ def main():
     
     # get log file    
     if config.has_option('logging', 'logfile'):
+        print ("Config got logg address :")
         logfile = config.get('logging', 'logfile')
     else:
+        print ("Default log adress ")
         logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)
 
     print("Log file seleccionada")
