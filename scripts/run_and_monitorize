@@ -64,7 +64,8 @@ def main():
     if args.conf:
         conf_file = args.conf
     else:
-        conf_file = r'/etc/run_and_monitorize/run_and_monitorize.cfg'
+        #conf_file = r'/etc/run_and_monitorize/run_and_monitorize.cfg'
+        conf_file = '/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/conf'
     config = ConfigParser.ConfigParser()
 
     print ("Reading file... ")
