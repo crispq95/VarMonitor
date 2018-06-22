@@ -2,11 +2,7 @@
 # Handle renaming of ConfigParser from python 2 to 3
 try:
     import ConfigParser
-except Exception as err :
-    print ("Error name :")
-    print (err)
-    print (" ")
-    print("MIAU")
+except ImportError:
     import configparser as ConfigParser
 
 import argparse
