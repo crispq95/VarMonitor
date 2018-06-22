@@ -114,6 +114,12 @@ def main():
         print (" ")
 
         #Handle the additional case when the logdir is defined inside the command
+
+        print ("Has option ? ")
+        print (config.has_option('logging', 'logdir_implicit'))
+
+        print ("Boolean : ")
+        print (config.getboolean('logging', 'logdir_implicit'))
         if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
             print ("CMM l")
             print (parse_cmd_args(command_list))
