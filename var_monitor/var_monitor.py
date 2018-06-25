@@ -156,7 +156,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-        return some_process.net_io_counterss().bytes_sent
+        return some_process.net_io_counters().bytes_sent
         #pass
 
 
