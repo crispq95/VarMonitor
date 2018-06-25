@@ -157,7 +157,9 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         print ("PROCESS ; ", some_process)
-        print ("PROCESS netw_IO; ", some_process.net_io_counters())
+        print ("PROCESS 1; ", some_process.net_if_addrs())
+        print ("PROCESS 2; ", some_process.net_if_stats())
+        print ("PROCESS 3; ", some_process.net_io_counters())
         #return some_process.io_counters().read_chars
         return psutil.net_io_counters().bytes_sent
         #pass
