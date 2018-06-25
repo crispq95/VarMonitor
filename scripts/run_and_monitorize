@@ -103,31 +103,14 @@ def main():
         # Initialize the process
         proc = psutil.Popen(command_list)
 
-        print ("PROCESS : ", proc)
-        print ("COMMAND LIST : ", command_list)
-        print ("CONFIG : ", config)
-
         # Handle the additional case when the logdir is defined inside the command
-        # print ("Has option ? ", config.has_option('logging', 'logdir_implicit'))
+        if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
+            print ("CMM l")
+            print (parse_cmd_args(command_list))
+            cmd_args, unknown = parse_cmd_args(command_list)
+            print (" ")
+            logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
 
-        # print ("Boolean : ")
-        # print (config)
-        # print (config.getboolean('logging', 'logdir_implicit'))
-
-        for a in config['logging']:
-            print (a, type(bool(-1)))
-            # ESTO SE TIENE QUE MIRAR, EL FOR NO HACE FALTA - > LA FUNCIOIN getboolean FALLA /!!!\
-            # if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
-            if config.has_option('logging', 'logdir_implicit') and bool(a[0]):
-                print ("CMM l")
-                print (parse_cmd_args(command_list))
-                cmd_args, unknown = parse_cmd_args(command_list)
-                print (" ")
-                logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
-
-    print("pid // command selected")
-    # print (type(proc))
-    # print (args.pid)
 
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)
@@ -135,11 +118,6 @@ def main():
     # Initialize and start the Monitor
     monit_kwargs = dict(map(modify_args, config.items('root')))
 
-    print("Variables a monitorizar : ")
-    for a in monit_kwargs:
-        print (a)
-
-    print (" ")
 
     if 'total_HS06' in monit_kwargs['var_list']:
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
