@@ -140,7 +140,7 @@ class CumulativeVarMonitor(VarMonitor):
     
     def update_report_value(self):
         self.report_value = self.var_value
-    
+
     def update_summary_value(self):
         self.summary_value = self.var_value
 
@@ -157,7 +157,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         print ("PROCESS ; ", some_process)
-        print ("PROCESS 1; ", some_process.net_if_addrs())
+        print ("PROCESS 1; ", some_process.children().net_if_addrs())
         print ("PROCESS 2; ", some_process.net_if_stats())
         print ("PROCESS 3; ", some_process.net_io_counters())
         #return some_process.io_counters().read_chars
