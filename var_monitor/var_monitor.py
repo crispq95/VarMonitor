@@ -28,7 +28,11 @@ def convert_size(size_bytes):
 
 
 class VarMonitor(object):
-    
+    def __init__(self, name, proc_monitor):
+        self.name = name
+        self.reset_values()
+        self.monitor = proc_monitor
+
     def reset_values(self):
         self.var_value = 0.0
         self.clean_report_value()
@@ -36,14 +40,8 @@ class VarMonitor(object):
     
     def clean_report_value(self):
         self.report_value = 0.0
-        
-    def __init__(self, name, proc_monitor):
-        self.name = name
-        self.reset_values()
-        self.monitor = proc_monitor
     
     def is_parent(self, some_process):
-        
         if some_process.pid == self.monitor.parent_proc.pid:
             return True
         else:
@@ -65,7 +63,6 @@ class VarMonitor(object):
 
 
 class RawVarMonitor(VarMonitor):
-    
     def get_var_value(self):
         return self.var_value
     
@@ -77,7 +74,6 @@ class RawVarMonitor(VarMonitor):
 
 
 class MemoryVarMonitor(VarMonitor):
-    
     def get_var_value(self):
         return convert_size(self.var_value)
 
@@ -89,7 +85,6 @@ class MemoryVarMonitor(VarMonitor):
 
 
 class MaxRSSMonitor(MemoryVarMonitor):
-    
     def update_value(self, some_process):
         if self.is_parent(some_process):
             self.var_value = some_process.memory_info().rss
@@ -104,7 +99,6 @@ class MaxRSSMonitor(MemoryVarMonitor):
         
 
 class MaxVMSMonitor(MaxRSSMonitor):
-    
     def update_value(self, some_process):
         if self.is_parent(some_process):
             self.var_value = some_process.memory_info().vms
@@ -113,7 +107,6 @@ class MaxVMSMonitor(MaxRSSMonitor):
 
 
 class CumulativeVarMonitor(VarMonitor):
-    
     def reset_values(self):
         self.var_value = 0.0
         self.var_value_dict = {}
@@ -159,7 +152,12 @@ class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
         
 class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-        return some_process.io_counters().write_chars        
+        return some_process.io_counters().write_chars
+
+class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
+    print ("Hola ! se supone que yo leo los bytes enviados :D")
+    #def get_process_value(self, some_process):
+    #    return some_process.io_counters().read_chars
 
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
@@ -200,7 +198,8 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_io_read', TotalIOReadMonitor),
             ('total_io_write', TotalIOWriteMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
-            ('total_HS06', TotalHS06Monitor)])
+            ('total_HS06', TotalHS06Monitor),
+            ('total_bytes_sent', TotalBytesSent)])
 
 
 class ProcessTreeMonitor():
@@ -284,8 +283,7 @@ class ProcessTreeMonitor():
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
-            print (".", end="")
-
+            print(self.process)
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
