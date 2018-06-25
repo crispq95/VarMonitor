@@ -156,8 +156,9 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     print ("Hola ! se supone que yo leo los bytes enviados :D")
-    #def get_process_value(self, some_process):
-    #    return some_process.io_counters().read_chars
+    def get_process_value(self, some_process):
+        #return some_process.io_counters().read_chars
+        pass
 
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
