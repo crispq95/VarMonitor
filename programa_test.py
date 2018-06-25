@@ -4,8 +4,8 @@ import time
 import math
 
 # import setup
-max_x = 10000
-max_y = 10000
+max_x = 1000
+max_y = 1000
 
 
 def main():
