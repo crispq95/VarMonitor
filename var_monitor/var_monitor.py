@@ -221,7 +221,6 @@ class ProcessTreeMonitor():
         self.lock = threading.RLock()
     
     def update_values(self, some_process):
-        print ("MIAU")
         for monitor in self.monitor_list:
             monitor.update_value(some_process)
     
@@ -252,7 +251,6 @@ class ProcessTreeMonitor():
     
     def update_all_values(self):
         # get var values from parent process
-        print("Geting var values from parent process ...")
         self.update_values(self.parent_proc)
 
         # iterate over children and update their values
@@ -281,14 +279,11 @@ class ProcessTreeMonitor():
             self.lock.release()
     
     def start(self):
-        print ("START ! ")
         self._log_file.write(self.get_headers())
         
         time_report = datetime.datetime.now()
 
-        print ("While process == ALIVE ")
         while self.proc_is_running():
-            print ("PROCESS IS RUNNING ! ")
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
@@ -303,7 +298,6 @@ class ProcessTreeMonitor():
     
             time.sleep(self.check_lapse)
 
-        print ("END ! ")
         self.parent_proc.wait()
         
         
