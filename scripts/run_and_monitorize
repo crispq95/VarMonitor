@@ -18,7 +18,7 @@ CHECK_LAPSE = 0  # time between each usage check in seconds
 REPORT_LAPSE = 1  # time between each usage print in seconds
 HS06_REF = 12.2  # reference to compute the HS06
 VAR_LIST = ['max_vms', 'max_rss', 'total_io_read', 'total_io_write',
-            'total_cpu_time', 'total_HS06']
+            'total_cpu_time', 'total_HS06', 'total_bytes_sent']
 
 
 def parse_cmd_args(args_list):
