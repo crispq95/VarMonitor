@@ -146,8 +146,7 @@ class CumulativeVarMonitor(VarMonitor):
 
 
 class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
-    def get_process_value(self, some_process):
-        return some_process.io_counters().read_chars
+    def get_process_value(self, some_process): return some_process.io_counters().read_chars
         
         
 class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
@@ -160,7 +159,7 @@ class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
 
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-    return psutil.net_io_counters().bytes_sent
+        return psutil.net_io_counters().bytes_sent
 
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
