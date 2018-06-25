@@ -284,7 +284,7 @@ class ProcessTreeMonitor():
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
-            print (".",end=" ")
+            print (".", end="")
 
             try:
                 self.update_all_values()
@@ -301,7 +301,7 @@ class ProcessTreeMonitor():
             time.sleep(self.check_lapse)
 
         self.parent_proc.wait()
-        print " "
+        print (" ")
         
         
     def proc_is_running(self):
