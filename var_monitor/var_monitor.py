@@ -156,7 +156,8 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-        print ("PROCESS ; ", some_process.net_io_counters())
+        print ("PROCESS ; ", some_process)
+        print ("PROCESS netw_IO; ", some_process.net_io_counters())
         #return some_process.io_counters().read_chars
         return some_process.net_io_counters().bytes_sent
         #pass
@@ -210,12 +211,6 @@ class ProcessTreeMonitor():
         print ("Init : ", proc, var_list, kwargs)
         self.parent_proc = proc
         self.kwargs = kwargs
-
-        for var in var_list:
-            print(VAR_MONITOR_DICT[var](var, self) )
-            print (" ")
-
-
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
