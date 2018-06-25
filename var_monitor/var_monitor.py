@@ -283,7 +283,6 @@ class ProcessTreeMonitor():
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
-            print(self.process)
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
