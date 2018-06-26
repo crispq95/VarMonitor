@@ -205,9 +205,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_io_read', TotalIOReadMonitor),
             ('total_io_write', TotalIOWriteMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
-            ('total_HS06', TotalHS06Monitor),
-            ('total_bytes_sent', TotalBytesSent),
-            ('total_bytes_recv', TotalBytesRecv)])
+            ('total_HS06', TotalHS06Monitor)])
 
 
 
@@ -233,7 +231,7 @@ class ProcessTreeMonitor():
     def update_values(self, some_process):
         for monitor in self.monitor_list:
             monitor.update_value(some_process)
-    
+
     def update_report_values(self):
         for monitor in self.monitor_list:
             monitor.update_report_value()
