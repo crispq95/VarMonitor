@@ -204,7 +204,6 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_mem_swap', TotalMemSwapMonitor)])
 
 
-
 class ProcessTreeMonitor():
     
     def __init__(self, proc, var_list, **kwargs):
@@ -273,7 +272,6 @@ class ProcessTreeMonitor():
 
     
     def write_log(self, log_message):
-        
         self.lock.acquire()
         try:
             self._log_file.write(log_message)
