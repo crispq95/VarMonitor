@@ -120,9 +120,9 @@ def main():
 
 
     if 'total_HS06' in monit_kwargs['var_list']:
-        print("______________HAY HS06")
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
-    else
+        print ("______________HAY HS06 : ", monit_kwargs['HS06_factor_func'])
+    else:
         print("NO HAY HS06_______________________")
     monit_kwargs['log_file'] = whole_logfile
 
