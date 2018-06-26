@@ -165,7 +165,12 @@ class TotalBytesRecv(CumulativeVarMonitor, MemoryVarMonitor):
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
         cpu_times = some_process.cpu_times()
-        return cpu_times.user + cpu_times.system 
+        return cpu_times.user + cpu_times.system
+
+
+class IOwait(CumulativeVarMonitor, RawVarMonitor):
+    def get_process_value(self, some_process):
+        return some_process.iowait()
 
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
@@ -202,7 +207,9 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
             ('total_HS06', TotalHS06Monitor),
             ('total_bytes_sent', TotalBytesSent),
-            ('total_bytes_recv', TotalBytesRecv)])
+            ('total_bytes_recv', TotalBytesRecv),
+            ('IO_wait', IOwait)])
+
 
 
 class ProcessTreeMonitor():
