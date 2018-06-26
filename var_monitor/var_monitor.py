@@ -155,7 +155,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 
 class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-        return some_process.memory_info().swap
+        return some_process.memory_full_info().swap
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
