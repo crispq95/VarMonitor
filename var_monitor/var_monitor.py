@@ -156,11 +156,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
 #Funciona pero no es lo que toca -> NO MIRA UN PROCESO INDIVIDUAL !
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
-        return psutil.net_io_counters().bytes_sent
-
-class TotalBytesRecv(CumulativeVarMonitor, MemoryVarMonitor):
-    def get_process_value(self, some_process):
-        return psutil.net_io_counters().bytes_recv
+        return psutil.memory_full_info().swap
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
@@ -205,7 +201,8 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_io_read', TotalIOReadMonitor),
             ('total_io_write', TotalIOWriteMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
-            ('total_HS06', TotalHS06Monitor)])
+            ('total_HS06', TotalHS06Monitor),
+            ('total_mem_swap', TotalMemSwapMonitor)])
 
 
 
