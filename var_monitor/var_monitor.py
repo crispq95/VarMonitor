@@ -220,6 +220,7 @@ class ProcessTreeMonitor():
         self.parent_proc = proc
         self.kwargs = kwargs
 
+        print ("HI ¿?")
         print (VAR_MONITOR_DICT)
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
