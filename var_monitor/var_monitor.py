@@ -153,11 +153,6 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
-class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
-    def get_process_value(self, some_process):
-        return psutil.net_io_counters().bytes_sent
-
-
 #Funciona pero no es lo que toca -> NO MIRA UN PROCESO INDIVIDUAL !
 class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
