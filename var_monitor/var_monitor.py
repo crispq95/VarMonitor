@@ -207,8 +207,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
             ('total_HS06', TotalHS06Monitor),
             ('total_bytes_sent', TotalBytesSent),
-            ('total_bytes_recv', TotalBytesRecv),
-            ('IO_wait', IOwait)])
+            ('total_bytes_recv', TotalBytesRecv)])
 
 
 
@@ -219,8 +218,6 @@ class ProcessTreeMonitor():
 
         self.parent_proc = proc
         self.kwargs = kwargs
-
-        print ("HI ¿?")
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
