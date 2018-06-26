@@ -153,8 +153,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
-#Funciona pero no es lo que toca -> NO MIRA UN PROCESO INDIVIDUAL !
-class TotalBytesSent(CumulativeVarMonitor, MemoryVarMonitor):
+class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return psutil.memory_full_info().swap
 
