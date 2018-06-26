@@ -221,7 +221,6 @@ class ProcessTreeMonitor():
         self.kwargs = kwargs
 
         print ("HI ¿?")
-        print (VAR_MONITOR_DICT)
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
