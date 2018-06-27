@@ -222,7 +222,7 @@ class ProcessTreeMonitor():
         print ("VAR LIST : ")
         for var in var_list:
             print (var, " ", end=" ")
-            print(VAR_MONITOR_DIC[var] ,"\\")
+            print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
         print (" ")
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
