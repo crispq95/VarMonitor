@@ -227,6 +227,10 @@ class ProcessTreeMonitor():
 
         #self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
 
+        print(" ")
+        print ("Y teneemoss  : ", VAR_MONITOR_DICT['total_HS06'])
+        print (" ")
+
         print ("monitor list : ")
         for var in var_list:
             print (var, " ", end=" ")
