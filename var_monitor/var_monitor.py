@@ -219,7 +219,7 @@ class ProcessTreeMonitor():
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        print ("MONITOR LIST", VAR_MONITOR_DICT[var](var, self) for var in var_list)
+        print ("MONITOR LIST : ", (VAR_MONITOR_DICT[var](var, self) for var in var_list))
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
