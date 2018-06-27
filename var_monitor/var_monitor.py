@@ -228,7 +228,7 @@ class ProcessTreeMonitor():
         #self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
 
         print(" ")
-        print ("Y teneemoss  : ", VAR_MONITOR_DICT['total_HS06'])
+        print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
         print (" ")
 
         print ("monitor list : ")
@@ -236,6 +236,9 @@ class ProcessTreeMonitor():
             print (var, " ", end=" ")
             self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
             print(" ", self.monitor_list, end=" ")
+
+        print (" ")
+        print (self.monitor_list)
 
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
