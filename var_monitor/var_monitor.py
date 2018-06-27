@@ -171,7 +171,7 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
         print (" ")
         super(TotalHS06Monitor, self).__init__(name, proc_monitor)
-        print ("HS06 -- init : ", name, proc_monitor)
+        print ("HS06 -- init : name -- ", name, " proc_monitor -- ", proc_monitor)
         print (" ")
 
         # Get HS06 factor
