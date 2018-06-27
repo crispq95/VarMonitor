@@ -178,12 +178,12 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
         # get the script to find the HS06 factor and run it
         HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
 
-        print ("PATH REAL : /nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/hs06dir/cpu2mult")
-        print ("PATH TEORICO : ", proc_monitor.kwargs.get('HS06_factor_func'))
-        print ("PATH TEORICO FINAL: ", HS06_factor_command_list)
+        #print ("PATH REAL : /nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/hs06dir/cpu2mult")
+        #print ("PATH TEORICO : ", )
+        #print ("PATH TEORICO FINAL: ", HS06_factor_command_list)
 
-        file = open("/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/hs06dir/cpu2mult", "r")
-        #file = open(HS06_factor_command_list, "r")
+        #file = open("/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/hs06dir/cpu2mult", "r")
+        file = open(proc_monitor.kwargs.get('HS06_factor_func'), "r")
         print ("FILE CONTENT : ", file.read())
 
         file.close()
