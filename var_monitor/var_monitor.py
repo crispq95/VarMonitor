@@ -214,12 +214,12 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 class ProcessTreeMonitor():
     
     def __init__(self, proc, var_list, **kwargs):
-        print ("Init : ", proc, var_list, kwargs)
+        print ("Init_ : ", proc, var_list, kwargs)
 
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        print  ("MONITOR LIST", self.monitor_list)
+        print ("MONITOR LIST", self.monitor_list)
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
