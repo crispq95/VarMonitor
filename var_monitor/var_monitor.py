@@ -169,6 +169,7 @@ class IOwait(CumulativeVarMonitor, RawVarMonitor):
 
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
+        print (" ")
         super(TotalHS06Monitor, self).__init__(name, proc_monitor)
         print ("HS06 -- init : ", name, proc_monitor)
         print (" ")
@@ -234,7 +235,7 @@ class ProcessTreeMonitor():
         print ("monitor list : ")
         for var in var_list:
             print (var, " ", end=" ")
-            self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
+            self.monitor_list = [VAR_MONITOR_DICT[var]]
             print(" ", self.monitor_list, end=" ")
 
         print (" ")
