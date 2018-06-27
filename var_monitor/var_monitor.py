@@ -178,7 +178,7 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
         # get the script to find the HS06 factor and run it
         HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
 
-        print (HS06_factor_command_list, sp.PIPE)
+        print ("command list : ", HS06_factor_command_list, sp.PIPE)
 
         p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
 
