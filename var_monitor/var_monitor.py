@@ -219,16 +219,17 @@ class ProcessTreeMonitor():
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        print ("VAR LIST : ")
-        for var in var_list:
-            print (var, " ", end=" ")
-            print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-        print (" ")
+        #print ("VAR LIST : ")
+        #for var in var_list:
+        #    print (var, " ", end=" ")
+        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
+        #print (" ")
 
         #self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
 
         print ("monitor list : ")
         for var in var_list:
+            print (var, " ", end=" ")
             self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
             print(" ", self.monitor_list, end=" ")
 
