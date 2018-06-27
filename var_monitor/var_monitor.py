@@ -238,7 +238,7 @@ class ProcessTreeMonitor():
             print(" ", self.monitor_list, end=" ")
 
         print (" ")
-        print (self.monitor_list)
+        print ("M lisr fuera : ", self.monitor_list)
 
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
