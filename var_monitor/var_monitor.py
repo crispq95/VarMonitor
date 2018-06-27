@@ -172,9 +172,14 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
         super(TotalHS06Monitor, self).__init__(name, proc_monitor)
         print ("HS06 -- init : ", name, proc_monitor)
         print (shlex.split(proc_monitor.kwargs.get('HS06_factor_func')))
+        print (" ")
+
         # Get HS06 factor
         # get the script to find the HS06 factor and run it
         HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
+
+        print (HS06_factor_command_list)
+
         p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
         p.wait()
         
