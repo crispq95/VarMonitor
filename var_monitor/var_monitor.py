@@ -220,7 +220,8 @@ class ProcessTreeMonitor():
         self.kwargs = kwargs
 
         for var in var_list:
-            print ("var LIST : ", var)
+            print ("var LIST : ", var, " ", end=" ")
+        print (" ")
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         print("monitor_list : ", self.monitor_list)
