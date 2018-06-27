@@ -178,16 +178,20 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
         # get the script to find the HS06 factor and run it
         HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
 
-        print ("command list : ", HS06_factor_command_list, sp.PIPE)
+        #file = open("/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/hs06dir/cpu2mult", "r")
+        file = open(HS06_factor_command_list, "r")
+        print ("FILE CONTENT : ", file.read())
 
-        p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
+        #print ("command list : ", HS06_factor_command_list, sp.PIPE)
 
-        print (p)
-        p.wait()
+        #p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
+
+        #print (p)
+        #p.wait()
         
         # Capture the HS06 factor from the stdout
-        m = re.search('HS06_factor=(.*)', p.stdout.read())
-        self.HS06_factor = float(m.group(1))
+        #m = re.search('HS06_factor=(.*)', p.stdout.read())
+        #self.HS06_factor = float(m.group(1))
     
     
     def get_process_value(self, some_process):
