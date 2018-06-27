@@ -208,7 +208,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
             ('total_io_read', TotalIOReadMonitor),
             ('total_io_write', TotalIOWriteMonitor),
             ('total_cpu_time', TotalCpuTimeMonitor),
-            ('total_HS06', TotalHS06Monitor),
+            #('total_HS06', TotalHS06Monitor),
             ('total_mem_swap', TotalMemSwapMonitor)])
 
 
@@ -225,6 +225,7 @@ class ProcessTreeMonitor():
         #    print (var, " ", end=" ")
         #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
         #print (" ")
+
 
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
 
