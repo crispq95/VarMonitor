@@ -21,8 +21,17 @@ VAR_LIST = ['max_vms', 'max_rss', 'total_io_read', 'total_io_write',
             'total_cpu_time', 'total_HS06', 'total_mem_swap']
 
 
+def parse_cmd_args(args_list):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--logdir', required=False, default='.')
+    parser.add_argument('--workdir', required=False, default='.')
+    args = parser.parse_known_args(args_list)
+    return args
+
+
 def parse_main_args():
     parser = argparse.ArgumentParser(description="CLI utility for running and monitoring processes.")
+
     parser.add_argument("--command", "-c", required=False, help="Command to be run and monitorized")
     parser.add_argument("--pid", "-p", required=False, help="Id of the process to monitorize", type=int)
     parser.add_argument("--conf", required=False, help="Configuration file")
@@ -63,7 +72,8 @@ def main():
     # Get logging directory
     if args.logdir:  # logdir = parametro
         logdir = args.logdir
-        print ("Explicit logdir : ", logdir)
+        config['logging']['logdir_implicit'] = '1'
+
     elif config.has_option('logging', 'logdir'):  # si esta en fichero de configuracion
         logdir = config.get('logging', 'logdir')
         print("Logfile on config : ", logdir)
@@ -97,6 +107,14 @@ def main():
         # Initialize the process
         proc = psutil.Popen(command_list)
 
+        # Handle the additional case when the logdir is defined inside the command
+        print (config.getboolean('logging', 'logdir_implicit'))
+        if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
+            cmd_args, unknown = parse_cmd_args(command_list)
+
+            print("cmd_args : ", cmd_args)
+            logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
+
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)
 
@@ -117,6 +135,13 @@ def main():
     print("Start monitor !")
     print(" ")
     monitor.start()
+
+    # guardar en fichero path+nombre fichero log creado
+    print("LOGFILE path+name = ", whole_logfile)
+
+    f = open("logNames.txt", "a+")
+    f.write(whole_logfile + '\n')
+    f.close()
 
     print(" FINISHED -- congrats <3 ")
     print(" ")
