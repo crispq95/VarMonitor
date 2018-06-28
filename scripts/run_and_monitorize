@@ -21,20 +21,12 @@ VAR_LIST = ['max_vms', 'max_rss', 'total_io_read', 'total_io_write',
             'total_cpu_time', 'total_HS06', 'total_mem_swap']
 
 
-def parse_cmd_args(args_list):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--logdir', required=False, default='.')
-    parser.add_argument('--workdir', required=False, default='.')
-    args = parser.parse_known_args(args_list)
-    return args
-
-
 def parse_main_args():
     parser = argparse.ArgumentParser(description="CLI utility for running and monitoring processes.")
     parser.add_argument("--command", "-c", required=False, help="Command to be run and monitorized")
-    parser.add_argument("--pid", "-p", required=False, help="Id of the process to monitorize",
-                        type=int)
+    parser.add_argument("--pid", "-p", required=False, help="Id of the process to monitorize", type=int)
     parser.add_argument("--conf", required=False, help="Configuration file")
+    parser.add_argument("--logdir", "-ld", required=False, help="Log directory")
 
     args = parser.parse_args()
     return args
@@ -65,18 +57,20 @@ def main():
         conf_file = '/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/conf/run_and_monitorize.cfg'
     config = ConfigParser.ConfigParser()
 
-    print("Config file seleccionada : ", config.read(conf_file))
+    config.read(conf_file)
 
     # Configure logging
     # Get logging directory
-    if config.has_option('logging', 'logdir'):
-        print ("Logdir selected by user")
+    if args.logdir:  # logdir = parametro
+        logdir = args.logdir
+        print ("Explicit logdir : ", logdir)
+    elif config.has_option('logging', 'logdir'):  # si esta en fichero de configuracion
         logdir = config.get('logging', 'logdir')
-    else:
+        print("Logfile on config : ", logdir)
+    else:  # por defecto = directorio actual
         logdir = '.'
         print ("Default logdir : ", logdir)
 
-    # get log file
     if config.has_option('logging', 'logfile'):
         print ("Config got logg address :")
         logfile = config.get('logging', 'logfile')
@@ -84,7 +78,7 @@ def main():
         logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)
         print ("Default log name : ", logfile)
 
-    print("Log file seleccionada")
+    print("Log file seleccionada : ", logfile)
 
     # Get the process to be monitorized
     if args.pid and args.command:
@@ -103,21 +97,11 @@ def main():
         # Initialize the process
         proc = psutil.Popen(command_list)
 
-        # Handle the additional case when the logdir is defined inside the command
-        if config.has_option('logging', 'logdir_implicit') and config.getboolean('logging', 'logdir_implicit'):
-            print ("CMM l")
-            print (parse_cmd_args(command_list))
-            cmd_args, unknown = parse_cmd_args(command_list)
-            print (" ")
-            logdir = os.path.join(cmd_args.workdir, cmd_args.logdir)
-
-
     # Compute whole file name
     whole_logfile = os.path.join(logdir, logfile)
 
     # Initialize and start the Monitor
     monit_kwargs = dict(map(modify_args, config.items('root')))
-
 
     if 'total_HS06' in monit_kwargs['var_list']:
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
