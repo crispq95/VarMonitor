@@ -13,17 +13,17 @@ import re
 import sys
 import threading
 
-CHECK_LAPSE = 0 # time between each usage check in seconds
-REPORT_LAPSE = 1 # time between each usage print in seconds
+CHECK_LAPSE = 0  # time between each usage check in seconds
+REPORT_LAPSE = 1  # time between each usage print in seconds
+
 
 def convert_size(size_bytes):
-
     if (size_bytes == 0):
         return '0B'
     size_name = ("B", "K", "M", "G", "T", "P", "E", "Z", "Y")
     i = int(math.floor(math.log(size_bytes, 1024)))
     p = math.pow(1024, i)
-    s = round(size_bytes/p, 2)
+    s = round(size_bytes / p, 2)
     return '%s%s' % (s, size_name[i])
 
 
@@ -37,26 +37,26 @@ class VarMonitor(object):
         self.var_value = 0.0
         self.clean_report_value()
         self.summary_value = 0.0
-    
+
     def clean_report_value(self):
         self.report_value = 0.0
-    
+
     def is_parent(self, some_process):
         if some_process.pid == self.monitor.parent_proc.pid:
             return True
         else:
             return False
-    
+
     '''
     def update_value(self, some_process):
         raise Exception('method not implemented!!')
-    
+
     def update_summary_value(self):
         raise Exception('method not implemented!!')
-    
+
     def get_var_value(self):
         raise Exception('method not implemented!!')
-    
+
     def get_summary_value(self):
         raise Exception('method not implemented!!')
     '''
@@ -65,10 +65,10 @@ class VarMonitor(object):
 class RawVarMonitor(VarMonitor):
     def get_var_value(self):
         return self.var_value
-    
+
     def get_report_value(self):
         return self.report_value
-    
+
     def get_summary_value(self):
         return self.summary_value
 
@@ -96,7 +96,7 @@ class MaxRSSMonitor(MemoryVarMonitor):
 
     def update_summary_value(self):
         self.summary_value = max(self.var_value, self.summary_value)
-        
+
 
 class MaxVMSMonitor(MaxRSSMonitor):
     def update_value(self, some_process):
@@ -113,19 +113,19 @@ class CumulativeVarMonitor(VarMonitor):
         self.report_value = 0.0
         self.summary_value = 0.0
         self.backup_count = 0
-    
+
     def get_process_value(self, some_process):
         raise Exception('Base class does not have this method implemented')
-    
+
     def set_value_from_value_dict(self):
         # As we have accumulated data for each process
         # it's reasonable to assume that the default aggregator is the sum
         self.var_value = sum(self.var_value_dict.values())
-    
+
     def update_value(self, some_process):
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
-        
+
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             # if the current value is lower than the already existent, it means
             # that the pid has been reused
@@ -133,11 +133,11 @@ class CumulativeVarMonitor(VarMonitor):
             bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
             self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
             self.backup_count += 1
-                
+
         self.var_value_dict[cur_pid] = cur_val
-        
+
         self.set_value_from_value_dict()
-    
+
     def update_report_value(self):
         self.report_value = self.var_value
 
@@ -147,15 +147,17 @@ class CumulativeVarMonitor(VarMonitor):
 
 class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
-        
-        
+
+
 class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
+
 class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.memory_full_info().swap
+
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
@@ -163,9 +165,16 @@ class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
         return cpu_times.user + cpu_times.system
 
 
+class ElapsedTime(CumulativeVarMonitor, RawVarMonitor):
+    def get_process_value(self, some_process):
+        cpu_times = some_process.cpu_times()
+        return cpu_times.user + cpu_times.system + cpu_times.idle
+
+
 class IOwait(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
         return some_process.iowait()
+
 
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
@@ -176,78 +185,73 @@ class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
 
         # Get HS06 factor
         # get the script to find the HS06 factor and run it
-        #HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
+        HS06_factor_command_list = shlex.split(proc_monitor.kwargs.get('HS06_factor_func'))
 
+        print (HS06_factor_command_list, sp.PIPE)
 
-        file = open(proc_monitor.kwargs.get('HS06_factor_func'), "r")
-        self.HS06_factor = float(file.read())
+        p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
 
-        file.close()
+        print (p)
+        p.wait()
 
-        #print ("command list : ", HS06_factor_command_list, sp.PIPE)
-
-        #p = sp.Popen(HS06_factor_command_list, stdout=sp.PIPE, stderr=sp.PIPE)
-
-        #print (p)
-        #p.wait()
-        
         # Capture the HS06 factor from the stdout
-        #m = re.search('HS06_factor=(.*)', p.stdout.read())
-        #self.HS06_factor = float(m.group(1))
-    
-    
+        m = re.search('HS06_factor=(.*)', p.stdout.read())
+        self.HS06_factor = float(m.group(1))
+
     def get_process_value(self, some_process):
         # get CPU time
         cpu_times = some_process.cpu_times()
-        
+
         # compute HS06*h
-        return self.HS06_factor*(cpu_times.user + cpu_times.system)/3600.0
+        return self.HS06_factor * (cpu_times.user + cpu_times.system) / 3600.0
+
     def get_var_value(self):
         return '{:.4f}'.format(self.var_value)
 
     def get_summary_value(self):
         return '{:.4f}'.format(self.summary_value)
-     
+
 
 VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
-            ('max_rss', MaxRSSMonitor),
-            ('total_io_read', TotalIOReadMonitor),
-            ('total_io_write', TotalIOWriteMonitor),
-            ('total_cpu_time', TotalCpuTimeMonitor),
-            ('total_HS06', TotalHS06Monitor),
-            ('total_mem_swap', TotalMemSwapMonitor)])
+                                ('max_rss', MaxRSSMonitor),
+                                ('total_io_read', TotalIOReadMonitor),
+                                ('total_io_write', TotalIOWriteMonitor),
+                                ('total_cpu_time', TotalCpuTimeMonitor),
+                                ('total_HS06', TotalHS06Monitor),
+                                ('total_mem_swap', TotalMemSwapMonitor),
+                                ('elapsed_time'), ElapsedTime])
 
 
 class ProcessTreeMonitor():
-    
+
     def __init__(self, proc, var_list, **kwargs):
         print ("Init_ : ", proc, var_list, kwargs)
 
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        #print ("VAR LIST : ")
-        #for var in var_list:
+        # print ("VAR LIST : ")
+        # for var in var_list:
         #    print (var, " ", end=" ")
         #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-        #print (" ")
+        # print (" ")
 
-        #maxvmsMonitor  self, name, proc_monitor)
-        #totalHS06Monitor (self, name, proc_monitor)
+        # maxvmsMonitor  self, name, proc_monitor)
+        # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
 
-        #print(" ")
-        #print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
-        #print (" ")
+        # print(" ")
+        # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
+        # print (" ")
 
-        #print ("monitor list : ")
-        #for var in var_list:
+        # print ("monitor list : ")
+        # for var in var_list:
         #    print (var, " ", end=" ")
         #    self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
         #    print(" ", self.monitor_list, end=" ")
 
-        #print (" ")
-        #print ("M lisr fuera : ", self.monitor_list)
+        # print (" ")
+        # print ("M lisr fuera : ", self.monitor_list)
 
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
@@ -258,7 +262,7 @@ class ProcessTreeMonitor():
         else:
             self._log_file = sys.stdout
         self.lock = threading.RLock()
-    
+
     def update_values(self, some_process):
         for monitor in self.monitor_list:
             monitor.update_value(some_process)
@@ -266,28 +270,28 @@ class ProcessTreeMonitor():
     def update_report_values(self):
         for monitor in self.monitor_list:
             monitor.update_report_value()
-    
+
     def update_summary_values(self):
         for monitor in self.monitor_list:
             monitor.update_summary_value()
-    
+
     def clean_report_values(self):
         for monitor in self.monitor_list:
             monitor.clean_report_value()
-    
+
     def get_var_values(self):
         return ', '.join(['{}, {}'.format(monit.name, monit.get_var_value()) for monit in self.monitor_list])
-    
+
     def get_report_values(self):
         s = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f') + ','
         return s + ','.join(['{}'.format(monit.get_report_value()) for monit in self.monitor_list]) + '\n'
-    
+
     def get_summary_values(self):
         return ', '.join(['{}, {}'.format(monit.name, monit.get_summary_value()) for monit in self.monitor_list])
-    
+
     def get_headers(self):
         return 'timestamp,' + ','.join([monit.name for monit in self.monitor_list]) + '\n'
-    
+
     def update_all_values(self):
         # get var values from parent process
         self.update_values(self.parent_proc)
@@ -299,14 +303,13 @@ class ProcessTreeMonitor():
                 self.update_values(children_process)
             except:
                 pass
-       
+
         # update report values
         self.update_report_values()
-        
+
         # update summary values
         self.update_summary_values()
 
-    
     def write_log(self, log_message):
         self.lock.acquire()
         try:
@@ -315,10 +318,10 @@ class ProcessTreeMonitor():
                 self._log_file.flush()
         finally:
             self.lock.release()
-    
+
     def start(self):
         self._log_file.write(self.get_headers())
-        
+
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
@@ -333,14 +336,13 @@ class ProcessTreeMonitor():
                 self.write_log(self.get_report_values())
                 self.clean_report_values()
                 time_report = now
-    
+
             time.sleep(self.check_lapse)
 
         self.parent_proc.wait()
         print (" ")
-        
-        
+
     def proc_is_running(self):
         return self.parent_proc.is_running() and self.parent_proc.status() != psutil.STATUS_ZOMBIE
-    
+
 
