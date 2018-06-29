@@ -219,7 +219,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
                                 ('total_cpu_time', TotalCpuTimeMonitor),
                                 ('total_HS06', TotalHS06Monitor),
                                 ('total_mem_swap', TotalMemSwapMonitor),
-                                ('elapsed_time'), ElapsedTime])
+                                ('elapsed_time', ElapsedTime)])
 
 
 class ProcessTreeMonitor():
