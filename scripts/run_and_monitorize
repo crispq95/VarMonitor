@@ -134,6 +134,7 @@ def main():
     print(" ")
     print("Start monitor !")
     print(" ")
+
     monitor.start()
 
     # guardar en fichero path+nombre fichero log creado

@@ -164,14 +164,6 @@ class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
         cpu_times = some_process.cpu_times()
         return cpu_times.user + cpu_times.system
 
-
-class ElapsedTime(CumulativeVarMonitor, RawVarMonitor):
-    def get_process_value(self, some_process):
-        cpu_times = some_process.cpu_times()
-        print (cpu_times)
-        return cpu_times.user + cpu_times.system + cpu_times.idle
-
-
 class IOwait(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
         return some_process.iowait()
@@ -219,8 +211,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
                                 ('total_io_write', TotalIOWriteMonitor),
                                 ('total_cpu_time', TotalCpuTimeMonitor),
                                 ('total_HS06', TotalHS06Monitor),
-                                ('total_mem_swap', TotalMemSwapMonitor),
-                                ('elapsed_time', ElapsedTime)])
+                                ('total_mem_swap', TotalMemSwapMonitor)])
 
 
 class ProcessTreeMonitor():
