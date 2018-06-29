@@ -168,6 +168,7 @@ class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
 class ElapsedTime(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
         cpu_times = some_process.cpu_times()
+        print (cpu_times)
         return cpu_times.user + cpu_times.system + cpu_times.idle
 
 
