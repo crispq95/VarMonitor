@@ -12,6 +12,7 @@ import random
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 
 logger = logging.getLogger(__file__)
 
@@ -23,16 +24,16 @@ def save_or_show(fig, save_plot=False, plot_file=None):
     if save_plot:
         if plot_file is None:
             raise Exception('File not informed')
-        
+
         fig.savefig(plot_file)
     else:
         plt.show()
-        
+
 def compute_df_columns(df):
-    
+
     if len(df['timestamp']) == 0:
         return None
-    
+
     df['timestamp'] = df['timestamp'].apply(datetime.strptime, args=('%Y-%m-%dT%H:%M:%S.%f',))
     df['time_delta_s'] = (df['timestamp'] - df['timestamp'].shift(1)).apply(lambda x: x.total_seconds())
     df['time_spent'] = df['timestamp'] - df['timestamp'][0]
@@ -42,7 +43,7 @@ def compute_df_columns(df):
         df['time_spent_rel'] = 0.
     else:
         df['time_spent_rel'] = df['time_spent_s']/df['time_spent_s'].iloc[-1]
-    
+
     if 'max_vms' in df.columns:
         df['max_vms_GB'] = df['max_vms'].apply(conversion)
     if 'max_rss' in df.columns:
@@ -105,15 +106,16 @@ class UsageParser():
 
         self.dfs = dfs
 
-    def newline(p1, p2):
+    def newline(self, p1):
         ax = plt.gca()
         xmin, xmax = ax.get_xbound()
+        xmin = 0
 
-        ymax = p1
-        ymin = p2
+        ymax = ymin = p1
 
-        l = mlines.Line2D([xmin,xmax], [ymin,ymax])
+        l = mlines.Line2D([xmin,xmax], [ymin,ymax], color='green')
         ax.add_line(l)
+
         return l
 
     def plot_sample(self, sample_size=1, var_list=VARLIST, save_plot=False, plot_file=None):
@@ -150,9 +152,12 @@ class UsageParser():
                 ax.set_ylim(var_lim)
                 ax.set_xlim(time_lim)
 
-            if var_name == 'max_uss_GB' :
-                l = newline(4,4)
-                plt.show()
+                if var_name == 'max_uss_GB' :
+                    xmin = 0
+                    xmax = time_max
+                    ymin = ymax = 4
+                    line = mlines.Line2D([xmin,xmax], [ymin,ymax], color='green')
+                    ax.add_line(line)
 
         save_or_show(fig, save_plot, plot_file)
 
