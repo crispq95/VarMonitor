@@ -106,17 +106,7 @@ class UsageParser():
 
         self.dfs = dfs
 
-    def newline(self, p1):
-        ax = plt.gca()
-        xmin, xmax = ax.get_xbound()
-        xmin = 0
 
-        ymax = ymin = p1
-
-        l = mlines.Line2D([xmin,xmax], [ymin,ymax], color='green')
-        ax.add_line(l)
-
-        return l
 
     def plot_sample(self, sample_size=1, var_list=VARLIST, save_plot=False, plot_file=None):
 
