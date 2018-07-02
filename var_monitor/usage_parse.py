@@ -47,69 +47,84 @@ def compute_df_columns(df):
         df['max_vms_GB'] = df['max_vms'].apply(conversion)
     if 'max_rss' in df.columns:
         df['max_rss_GB'] = df['max_rss'].apply(conversion)
+    if 'max_uss' in df.columns:
+        df['max_uss_GB'] = df['max_uss'].apply(conversion)
     if 'total_io_read' in df.columns:
         df['total_io_read_GB'] = df['total_io_read'].apply(conversion)
     if 'total_io_write' in df.columns:
         df['total_io_write_GB'] = df['total_io_write'].apply(conversion)
     if 'total_cpu_time' in df.columns:
         df['cpu_perc'] = 100.*(df['total_cpu_time'] - df['total_cpu_time'].shift(1))/df['time_delta_s']
-    
+
     return df
 
 def get_min_2n(some_number):
     '''
     find the minimum power of two greater than some_number
     '''
-    
+
     return np.power(2., np.ceil(np.log2(some_number)))
 
-VARLIST = ['max_vms_GB', 'max_rss_GB', 'total_io_read_GB', 'total_io_write_GB',
+VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
 
 class UsageParser():
-    
+
     def __init__(self):
-        
-        self.log_files = None 
+
+        self.log_files = None
         self.dfs = None
         self.additional_stats = None
-    
-    
+
+
     def load_log_files(self, wildcard_list, max_len=None):
-        
+
         log_files = []
-        
-        for wildcard in wildcard_list:        
-            log_files += glob.glob(wildcard)
-    
-        # When maximum length is fixed, get the first max_len files 
+
+        for wildcard in wildcard_list:
+            #log_files += glob.glob(wildcard)
+            log_files.append(wildcard)
+
+
+
+        # When maximum length is fixed, get the first max_len files
         if not max_len is None:
             log_files = log_files[:max_len]
-        
+
         self.log_files = log_files
-        
+
         self.load_dfs()
-    
+
     def load_dfs(self):
-        
+
         dfs = []
         for log_file in self.log_files:
             df = pd.read_csv(log_file, engine='python')
             compute_df_columns(df)
             dfs.append(df)
-        
+
         self.dfs = dfs
 
-    
+    def newline(p1, p2):
+        ax = plt.gca()
+        xmin, xmax = ax.get_xbound()
+
+        ymax = p1
+        ymin = p2
+
+        l = mlines.Line2D([xmin,xmax], [ymin,ymax])
+        ax.add_line(l)
+        return l
+
     def plot_sample(self, sample_size=1, var_list=VARLIST, save_plot=False, plot_file=None):
-        
+
         MARGIN = 0.05
-        
+
         sample_dfs = random.sample(self.dfs, sample_size)
         n_vars = len(var_list)
-        
+
         fig = plt.figure(figsize=(8*sample_size, 8*n_vars))
-        
+
         ax_ind = 1
         for var_name in var_list:
             var_min = np.inf
@@ -126,7 +141,7 @@ class UsageParser():
                 var_min = min([var_min, sample_df[var_name].min()])
                 time_max = max([time_max, sample_df['time_spent_s'].max()])
                 ax_ind += 1
-            
+
             var_margin = MARGIN*(var_max - var_min)
             var_lim = [var_min - var_margin, var_max + var_margin]
             time_margin = MARGIN*(time_max)
@@ -134,7 +149,11 @@ class UsageParser():
             for ax in var_axes:
                 ax.set_ylim(var_lim)
                 ax.set_xlim(time_lim)
-        
+
+            if var_name == 'max_uss_GB' :
+                l = newline(4,4)
+                plt.show()
+
         save_or_show(fig, save_plot, plot_file)
 
     def compute_additional_stats(self, var_list = VARLIST, n_bins=100):
