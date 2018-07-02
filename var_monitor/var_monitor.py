@@ -105,6 +105,12 @@ class MaxVMSMonitor(MaxRSSMonitor):
         else:
             self.var_value += some_process.memory_info().vms
 
+class MaxUSSMonitor(MaxRSSMonitor):
+    def update_value(self, some_process):
+        if self.is_parent(some_process):
+            self.var_value = some_process.memory_full_info().uss
+        else:
+            self.var_value += some_process.memory_full_info().uss
 
 class CumulativeVarMonitor(VarMonitor):
     def reset_values(self):
@@ -211,7 +217,8 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
                                 ('total_io_write', TotalIOWriteMonitor),
                                 ('total_cpu_time', TotalCpuTimeMonitor),
                                 ('total_HS06', TotalHS06Monitor),
-                                ('total_mem_swap', TotalMemSwapMonitor)])
+                                ('total_mem_swap', TotalMemSwapMonitor),
+                                ('max_uss', MaxUSSMonitor)])
 
 
 class ProcessTreeMonitor():
