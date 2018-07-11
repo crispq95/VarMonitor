@@ -172,7 +172,6 @@ class ParentOnlyCumulativeVarMonitor(VarMonitor):
             cur_val = self.get_process_value(some_process)
         else :
             cur_val = 0
-        cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
 
 
