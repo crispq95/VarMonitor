@@ -151,6 +151,50 @@ class CumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
+class ParentOnlyCumulativeVarMonitor(VarMonitor):
+    def reset_values(self):
+        self.var_value = 0.0
+        self.var_value_dict = {}
+        self.report_value = 0.0
+        self.summary_value = 0.0
+        self.backup_count = 0
+
+    def get_process_value(self, some_process):
+        raise Exception('Base class does not have this method implemented')
+
+    def set_value_from_value_dict(self):
+        # As we have accumulated data for each process
+        # it's reasonable to assume that the default aggregator is the sum
+        self.var_value = sum(self.var_value_dict.values())
+
+    def update_value(self, some_process):
+        if self.is_parent(some_process):
+            print ("PARENT ! ")
+            cur_val = self.get_process_value(some_process)
+        else :
+            cur_val = 0
+        cur_pid = some_process.pid
+
+
+        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
+            # if the current value is lower than the already existent, it means
+            # that the pid has been reused
+            # move the old value to a backup
+            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
+            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
+            self.backup_count += 1
+
+        self.var_value_dict[cur_pid] = cur_val
+
+        self.set_value_from_value_dict()
+
+    def update_report_value(self):
+        self.report_value = self.var_value
+
+    def update_summary_value(self):
+        self.summary_value = self.var_value
+
+
 class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
 
@@ -269,15 +313,6 @@ class ProcessTreeMonitor():
     ### __________________________________________________________________________
     def update_values(self, some_process):
         for monitor in self.monitor_list:
-            if monitor in self.parent_only:
-                print (monitor)
-                if some_process == self.parent_proc :
-                    print ("Checking on parent process. ")
-            else :
-                print("Fuera : ", monitor )
-
-
-
             monitor.update_value(some_process)
 
     ### __________________________________________________________________________
