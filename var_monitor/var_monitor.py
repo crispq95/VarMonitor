@@ -231,15 +231,16 @@ class ProcessTreeMonitor():
 
         print ("_______ <33333 _______")
 
-        print ("VAR LIST : ")
-        for var in var_list:
-            print (var, " ", end=" ")
-            print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-         print (" ")
+        #print ("VAR LIST : ")
+        #for var in var_list:
+        #    print (var, " ", end=" ")
+        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
+        #print (" ")
 
         # maxvmsMonitor  self, name, proc_monitor)
         # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
+        self.parent_only = [TotalIOReadMonitor,TotalIOWriteMonitor]
 
         # print(" ")
         # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
@@ -264,9 +265,16 @@ class ProcessTreeMonitor():
             self._log_file = sys.stdout
         self.lock = threading.RLock()
 
+
+    ### __________________________________________________________________________
     def update_values(self, some_process):
         for monitor in self.monitor_list:
+            if monitor in self.parent_only:
+                if some_process == self.parent_proc :
+                    print "Checking on parent process. "
             monitor.update_value(some_process)
+
+    ### __________________________________________________________________________
 
     def update_report_values(self):
         for monitor in self.monitor_list:
