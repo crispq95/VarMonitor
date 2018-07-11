@@ -169,7 +169,6 @@ class ParentOnlyCumulativeVarMonitor(VarMonitor):
 
     def update_value(self, some_process):
         if self.is_parent(some_process):
-            print ("PARENT ! ")
             cur_val = self.get_process_value(some_process)
         else :
             cur_val = 0
