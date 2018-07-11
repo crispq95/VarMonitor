@@ -195,11 +195,11 @@ class ParentOnlyCumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
-class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
+class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
 
 
-class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
+class TotalIOWriteMonitor(ParentOnlyCumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
