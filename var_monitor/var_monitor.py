@@ -151,22 +151,7 @@ class CumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
-class ParentOnlyCumulativeVarMonitor(VarMonitor):
-    def reset_values(self):
-        self.var_value = 0.0
-        self.var_value_dict = {}
-        self.report_value = 0.0
-        self.summary_value = 0.0
-        self.backup_count = 0
-
-    def get_process_value(self, some_process):
-        raise Exception('Base class does not have this method implemented')
-
-    def set_value_from_value_dict(self):
-        # As we have accumulated data for each process
-        # it's reasonable to assume that the default aggregator is the sum
-        self.var_value = sum(self.var_value_dict.values())
-
+class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
     def update_value(self, some_process):
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
@@ -186,12 +171,6 @@ class ParentOnlyCumulativeVarMonitor(VarMonitor):
         self.var_value_dict[cur_pid] = cur_val
 
         self.set_value_from_value_dict()
-
-    def update_report_value(self):
-        self.report_value = self.var_value
-
-    def update_summary_value(self):
-        self.summary_value = self.var_value
 
 
 class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor, MemoryVarMonitor):
