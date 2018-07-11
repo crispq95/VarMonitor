@@ -229,11 +229,13 @@ class ProcessTreeMonitor():
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        # print ("VAR LIST : ")
-        # for var in var_list:
-        #    print (var, " ", end=" ")
-        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-        # print (" ")
+        print ("_______ <33333 _______")
+
+        print ("VAR LIST : ")
+        for var in var_list:
+            print (var, " ", end=" ")
+            print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
+         print (" ")
 
         # maxvmsMonitor  self, name, proc_monitor)
         # totalHS06Monitor (self, name, proc_monitor)
