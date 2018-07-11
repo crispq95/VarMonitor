@@ -220,6 +220,9 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
                                 ('total_mem_swap', TotalMemSwapMonitor),
                                 ('max_uss', MaxUSSMonitor)])
 
+VAR_PARENTMONITOR_DICT = OrderedDict([('total_io_read', TotalIOReadMonitor),
+                                ('total_io_write', TotalIOWriteMonitor)])
+
 
 class ProcessTreeMonitor():
 
@@ -240,7 +243,7 @@ class ProcessTreeMonitor():
         # maxvmsMonitor  self, name, proc_monitor)
         # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
-        self.parent_only = [TotalIOReadMonitor,TotalIOWriteMonitor]
+        self.parent_only = [VAR_PARENTMONITOR_DICT[var](var, self) for var in var_list]
 
         # print(" ")
         # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
