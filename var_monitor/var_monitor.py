@@ -270,8 +270,14 @@ class ProcessTreeMonitor():
     def update_values(self, some_process):
         for monitor in self.monitor_list:
             if monitor in self.parent_only:
+                print (monitor)
                 if some_process == self.parent_proc :
                     print ("Checking on parent process. ")
+            else :
+                print("Fuera : ", monitor )
+
+
+
             monitor.update_value(some_process)
 
     ### __________________________________________________________________________
