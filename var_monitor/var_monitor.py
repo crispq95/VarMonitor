@@ -271,7 +271,7 @@ class ProcessTreeMonitor():
         for monitor in self.monitor_list:
             if monitor in self.parent_only:
                 if some_process == self.parent_proc :
-                    print "Checking on parent process. "
+                    print ("Checking on parent process. ")
             monitor.update_value(some_process)
 
     ### __________________________________________________________________________
