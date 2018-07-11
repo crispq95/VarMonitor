@@ -192,11 +192,6 @@ class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
         cpu_times = some_process.cpu_times()
         return cpu_times.user + cpu_times.system
 
-class IOwait(CumulativeVarMonitor, RawVarMonitor):
-    def get_process_value(self, some_process):
-        return some_process.iowait()
-
-
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
         print (" ")
@@ -244,7 +239,6 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 
 
 class ProcessTreeMonitor():
-
     def __init__(self, proc, var_list, **kwargs):
         print ("Init_ : ", proc, var_list, kwargs)
 
@@ -252,31 +246,8 @@ class ProcessTreeMonitor():
         self.kwargs = kwargs
 
         print ("_______ <33333 _______")
-
-        #print ("VAR LIST : ")
-        #for var in var_list:
-        #    print (var, " ", end=" ")
-        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-        #print (" ")
-
-        # maxvmsMonitor  self, name, proc_monitor)
-        # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
         self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
-
-        # print(" ")
-        # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
-        # print (" ")
-
-        # print ("monitor list : ")
-        # for var in var_list:
-        #    print (var, " ", end=" ")
-        #    self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
-        #    print(" ", self.monitor_list, end=" ")
-
-        # print (" ")
-        # print ("M lisr fuera : ", self.monitor_list)
-
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
         if 'log_file' in kwargs:
@@ -291,6 +262,8 @@ class ProcessTreeMonitor():
     ### __________________________________________________________________________
     def update_values(self, some_process):
         for monitor in self.monitor_list:
+            if some_process == self.parent_proc:
+                print ("dad proc ")
             monitor.update_value(some_process)
 
     ### __________________________________________________________________________
