@@ -258,15 +258,9 @@ class ProcessTreeMonitor():
             self._log_file = sys.stdout
         self.lock = threading.RLock()
 
-
-    ### __________________________________________________________________________
     def update_values(self, some_process):
         for monitor in self.monitor_list:
-            if some_process == self.parent_proc:
-                print ("dad proc ")
             monitor.update_value(some_process)
-
-    ### __________________________________________________________________________
 
     def update_report_values(self):
         for monitor in self.monitor_list:
