@@ -264,14 +264,12 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 
 class ProcessTreeMonitor():
     def __init__(self, proc, var_list, **kwargs):
-        print ("Init_ : ", proc, var_list, kwargs)
-
+        #print ("Init_ : ", proc, var_list, kwargs)
         self.parent_proc = proc
         self.kwargs = kwargs
 
         print ("_______ <33333 _______")
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
-        #self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
 
