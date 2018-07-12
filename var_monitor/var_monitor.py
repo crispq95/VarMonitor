@@ -252,9 +252,10 @@ class ProcessTreeMonitor():
 
         for child in self.process_tree:
             if child.children != []:
+                print (child)
                 self.process_tree[child] = child.children()
-                print ("children of ",child," -- ", child.children())
-        print ("Process tree : ", self.process_tree)
+                #print ("children of ",child," -- ", child.children())
+        #print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
