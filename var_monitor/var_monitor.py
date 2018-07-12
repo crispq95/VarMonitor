@@ -255,6 +255,8 @@ class ProcessTreeMonitor():
             for c in childs:
                 if c.is_running() and c.children():
                     self.process_tree[c] = c.children()
+                else :
+                    print (c.pid)
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
