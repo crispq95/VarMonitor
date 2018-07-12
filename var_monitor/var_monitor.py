@@ -248,13 +248,13 @@ class ProcessTreeMonitor():
 
     def update_process_tree(self):
         if self.parent_proc.children():
-            self.process_tree[self.parent_proc] = self.parent_proc.children()
+            self.process_tree[self.parent_proc] = self.parent_proc.children().pid
         old_dict = self.process_tree.copy()
 
         for childs in old_dict.values():
             for c in childs:
                 if c.children():
-                    self.process_tree[c] = c.children()
+                    self.process_tree[c] = c.children().pid
         print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
