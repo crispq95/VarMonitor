@@ -247,9 +247,12 @@ class ProcessTreeMonitor():
         self.process_tree = {self.parent_proc:None}
 
     def update_process_tree(self):
+        if self.parent_proc.children() != []:
+            self.process_tree[self.parent_proc] = self.parent_proc.children()
+
         for child in self.process_tree:
             if child.children != []:
-                self.process_tree[child].append(child.children())
+                self.process_tree[child] = child.children()
                 print ("miau")
         print ("Process tree : ", self.process_tree)
 
