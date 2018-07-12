@@ -340,7 +340,7 @@ class ProcessTreeMonitor():
         self.update_summary_values()
 
     def update_IO_values(self):
-
+        pass
 
 
     def write_log(self, log_message):
