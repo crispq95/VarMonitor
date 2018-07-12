@@ -259,7 +259,8 @@ class ProcessTreeMonitor():
                     for aux in c.children():
                         if aux.is_running():
                             c_list.append(aux)
-                self.process_tree[c] = c_list
+                    self.process_tree[c] = c_list
+
                 else:
                     pass
                     #self.process_tree.pop(c)
