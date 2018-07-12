@@ -249,7 +249,7 @@ class ProcessTreeMonitor():
     def update_process_tree(self):
         if self.parent_proc.children() != []:
             self.process_tree[self.parent_proc] = self.parent_proc.children()
-        old_dict = copy(self.process_tree)
+        old_dict = self.process_tree.copy()
 
         for childs in old_dict.values():
             for c in childs:
