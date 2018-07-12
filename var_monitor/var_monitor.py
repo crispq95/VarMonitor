@@ -257,7 +257,7 @@ class ProcessTreeMonitor():
                     if c.children():
                         self.process_tree[c] = c.children()
             except :
-                pass
+                print ("D:")
     def update_values(self, some_process):
         for monitor in self.monitor_list:
             monitor.update_value(some_process)
