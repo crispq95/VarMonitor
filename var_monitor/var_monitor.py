@@ -155,7 +155,6 @@ class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
     def update_value(self, some_process):
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
-            print ("PARENT VALUE : ", cur_val)
         else :
             cur_val = 0
         cur_pid = some_process.pid
@@ -174,7 +173,7 @@ class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
         self.set_value_from_value_dict()
 
 
-class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
+class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
 
 
