@@ -247,6 +247,8 @@ class ProcessTreeMonitor():
         self.process_tree = {}
 
     def update_process_tree(self):
+        dead_procs = {}
+
         if self.parent_proc.children() :
             c_list = []
             for c in self.parent_proc.children():
@@ -260,18 +262,17 @@ class ProcessTreeMonitor():
         for childs in old_dict.values():
             for c in childs:
                 c_list = []
+                d_list = []
                 if c.is_running() and c.children():
                     for aux in c.children():
                         if aux.is_running():
                             c_list.append(aux)
+                        else :
+                            d_list.append(aux)
                     self.process_tree[c] = c_list
+                    dead_procs[c] = d_list
 
-                else:
-                    pass
-                    #self.process_tree.pop(c)
-                    #print ("rip ", c.pid)
-        print ("Process Tree :", self.process_tree)
-
+        return dead_procs
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
@@ -334,7 +335,10 @@ class ProcessTreeMonitor():
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
-            self.update_process_tree()
+            d_l = self.update_process_tree()
+
+            if d_l :
+                print (d_l)
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
