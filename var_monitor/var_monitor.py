@@ -330,10 +330,6 @@ class ProcessTreeMonitor():
         # update summary values
         self.update_summary_values()
 
-    def update_IO_values(self):
-
-
-
     def write_log(self, log_message):
         self.lock.acquire()
         try:
