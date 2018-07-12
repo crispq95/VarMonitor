@@ -47,7 +47,13 @@ class VarMonitor(object):
         else:
             return False
 
-
+     '''       
+    def create_process_tree(self):
+        for child in self.process_tree:
+            if child.children != []:
+                self.process_tree[child].append(child.children())
+        print ("Process tree : ", self.process_tree)
+    '''
 
     '''
     def update_value(self, some_process):
@@ -131,10 +137,7 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value = sum(self.var_value_dict.values())
 
     def update_value(self, some_process):
-        if self.is_parent(some_process):
-            cur_val = self.get_process_value(some_process)
-        else:
-            cur_val = 0
+        cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
@@ -156,52 +159,11 @@ class CumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
-class ParentOnlyCumulativeVarMonitor(VarMonitor):
-    def reset_values(self, parent):
-        self.var_value = 0.0
-        self.var_value_dict = {}
-        self.report_value = 0.0
-        self.summary_value = 0.0
-        self.backup_count = 0
-
-    def get_process_value(self, some_process):
-        raise Exception('Base class does not have this method implemented')
-
-    def set_value_from_value_dict(self):
-        # As we have accumulated data for each process
-        # it's reasonable to assume that the default aggregator is the sum
-        self.var_value = sum(self.var_value_dict.values())
-
-    def update_value(self, some_process):
-        if self.is_parent(some_process):
-            cur_val = self.get_process_value(some_process)
-        else:
-            cur_val = 0
-        cur_pid = some_process.pid
-
-        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
-            # if the current value is lower than the already existent, it means
-            # that the pid has been reused
-            # move the old value to a backup
-            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
-            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
-            self.backup_count += 1
-
-        self.var_value_dict[cur_pid] = cur_val
-
-        self.set_value_from_value_dict()
-
-    def update_report_value(self):
-        self.report_value = self.var_value
-
-    def update_summary_value(self):
-        self.summary_value = self.var_value
-
-class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor,MemoryVarMonitor):
+class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
 
 
-class TotalIOWriteMonitor(ParentOnlyCumulativeVarMonitor, MemoryVarMonitor):
+class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
@@ -215,6 +177,11 @@ class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
         cpu_times = some_process.cpu_times()
         return cpu_times.user + cpu_times.system
+
+class IOwait(CumulativeVarMonitor, RawVarMonitor):
+    def get_process_value(self, some_process):
+        return some_process.iowait()
+
 
 class TotalHS06Monitor(CumulativeVarMonitor, RawVarMonitor):
     def __init__(self, name, proc_monitor):
@@ -263,18 +230,38 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 
 
 class ProcessTreeMonitor():
+
     def __init__(self, proc, var_list, **kwargs):
         print ("Init_ : ", proc, var_list, kwargs)
 
         self.parent_proc = proc
         self.kwargs = kwargs
 
-        print ("_______ <33333 _______")
+        # print ("VAR LIST : ")
+        # for var in var_list:
+        #    print (var, " ", end=" ")
+        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
+        # print (" ")
+
+        # maxvmsMonitor  self, name, proc_monitor)
+        # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
-        #self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
+
+        # print(" ")
+        # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
+        # print (" ")
+
+        # print ("monitor list : ")
+        # for var in var_list:
+        #    print (var, " ", end=" ")
+        #    self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
+        #    print(" ", self.monitor_list, end=" ")
+
+        # print (" ")
+        # print ("M lisr fuera : ", self.monitor_list)
+
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
-
         if 'log_file' in kwargs:
             if os.path.exists(kwargs['log_file']):
                 raise Exception('File {} already exists'.format(kwargs['log_file']))
