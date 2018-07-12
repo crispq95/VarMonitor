@@ -259,7 +259,7 @@ class ProcessTreeMonitor():
                 else:
                     self.process_tree.pop(c)
                     print ("rip ", c.pid)
-
+        print ("Process Tree :", self.process_tree)
 
 
     def update_values(self, some_process):
