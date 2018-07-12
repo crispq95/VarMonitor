@@ -257,6 +257,7 @@ class ProcessTreeMonitor():
                     if c.children():
                         self.process_tree[c] = c.children()
                 else:
+                    self.process_tree.pop(c)
                     print ("rip ", c.pid)
 
 
