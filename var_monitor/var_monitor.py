@@ -250,10 +250,11 @@ class ProcessTreeMonitor():
         if self.parent_proc.children() != []:
             self.process_tree[self.parent_proc] = self.parent_proc.children()
 
-        for child in self.process_tree.values():
-            if child.children != []:
-                print (child)
-                self.process_tree[child] = child.children()
+        for childs in self.process_tree.values():
+            for c in childs:
+                if child.children != []:
+                    print (child)
+                    self.process_tree[child] = child.children()
                 #print ("children of ",child," -- ", child.children())
         #print ("Process tree : ", self.process_tree)
 
