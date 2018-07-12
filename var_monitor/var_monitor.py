@@ -254,10 +254,9 @@ class ProcessTreeMonitor():
         for childs in old_dict.values():
             for c in childs:
                 if c.children != []:
-                    print (c)
                     self.process_tree[c] = c.children()
                 #print ("children of ",child," -- ", child.children())
-        #print ("Process tree : ", self.process_tree)
+        print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
