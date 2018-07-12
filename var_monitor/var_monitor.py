@@ -270,7 +270,8 @@ class ProcessTreeMonitor():
                         else :
                             d_list.append(aux)
                     self.process_tree[c] = c_list
-                    dead_procs[c] = d_list
+                    if d_list:
+                        dead_procs[c] = d_list
 
         return dead_procs
 
