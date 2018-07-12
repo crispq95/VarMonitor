@@ -255,7 +255,7 @@ class ProcessTreeMonitor():
             for c in childs:
                 if c.is_running() :
                     pass
-                else
+                else:
                     print ("rip ", c.pid)
                 if c.children():
                     self.process_tree[c] = c.children()
