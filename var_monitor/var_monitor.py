@@ -310,7 +310,7 @@ class ProcessTreeMonitor():
 
     def start(self):
         self._log_file.write(self.get_headers())
-
+        self.create_process_tree()
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
