@@ -131,7 +131,7 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value = sum(self.var_value_dict.values())
 
     def update_value(self, some_process):
-        if some_process.is_parent():
+        if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
         else :
             curr_val = 0
