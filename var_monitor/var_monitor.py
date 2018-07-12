@@ -254,8 +254,12 @@ class ProcessTreeMonitor():
 
         for childs in old_dict.values():
             for c in childs:
+                c_list = []
                 if c.is_running() and c.children():
-                    self.process_tree[c] = c.children()
+                    for aux in c.children():
+                        if aux.is_running():
+                            c_list.append(aux)
+                self.process_tree[c] = c_list
                 else:
                     pass
                     #self.process_tree.pop(c)
