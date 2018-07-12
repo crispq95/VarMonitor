@@ -244,9 +244,11 @@ class ProcessTreeMonitor():
             self._log_file = sys.stdout
         self.lock = threading.RLock()
 
-        self.process_tree = self.parent_proc.children()
+        self.process_tree = {self.parent_proc,self.parent_proc.children()}
 
     def create_process_tree(self):
+        int("Process tree : ", self.process_tree)
+
         for child in self.process_tree:
             if child.children != []:
                 self.process_tree[child].append(child.children())
