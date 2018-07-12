@@ -47,13 +47,7 @@ class VarMonitor(object):
         else:
             return False
 
-    '''       
-    def create_process_tree(self):
-        for child in self.process_tree:
-            if child.children != []:
-                self.process_tree[child].append(child.children())
-        print ("Process tree : ", self.process_tree)
-    '''
+
 
     '''
     def update_value(self, some_process):
@@ -137,7 +131,10 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value = sum(self.var_value_dict.values())
 
     def update_value(self, some_process):
-        cur_val = self.get_process_value(some_process)
+        if some_process.is_parent():
+            cur_val = self.get_process_value(some_process)
+        else :
+            curr_val = 0
         cur_pid = some_process.pid
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
@@ -236,30 +233,7 @@ class ProcessTreeMonitor():
 
         self.parent_proc = proc
         self.kwargs = kwargs
-
-        # print ("VAR LIST : ")
-        # for var in var_list:
-        #    print (var, " ", end=" ")
-        #    print(VAR_MONITOR_DICT[var] ,"\\", end=" ")
-        # print (" ")
-
-        # maxvmsMonitor  self, name, proc_monitor)
-        # totalHS06Monitor (self, name, proc_monitor)
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
-
-        # print(" ")
-        # print ("Y para total_HS06  : ", VAR_MONITOR_DICT['total_HS06'])
-        # print (" ")
-
-        # print ("monitor list : ")
-        # for var in var_list:
-        #    print (var, " ", end=" ")
-        #    self.monitor_list = [VAR_MONITOR_DICT[var](var, self)]
-        #    print(" ", self.monitor_list, end=" ")
-
-        # print (" ")
-        # print ("M lisr fuera : ", self.monitor_list)
-
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
         if 'log_file' in kwargs:
@@ -269,6 +243,14 @@ class ProcessTreeMonitor():
         else:
             self._log_file = sys.stdout
         self.lock = threading.RLock()
+
+        self.process_tree = self.parent_proc.children()
+
+    def create_process_tree(self):
+        for child in self.process_tree:
+            if child.children != []:
+                self.process_tree[child].append(child.children())
+        print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
