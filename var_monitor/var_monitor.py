@@ -244,7 +244,7 @@ class ProcessTreeMonitor():
             self._log_file = sys.stdout
         self.lock = threading.RLock()
 
-        self.process_tree = {self.parent_proc:None}
+        self.process_tree = {}
 
     def update_process_tree(self):
         if self.parent_proc.children() != []:
