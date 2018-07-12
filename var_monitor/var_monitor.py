@@ -255,7 +255,6 @@ class ProcessTreeMonitor():
             for c in childs:
                 if c.children():
                     self.process_tree[c] = c.children()
-                    print ("children of ",c," -- ", c.children())
         print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
