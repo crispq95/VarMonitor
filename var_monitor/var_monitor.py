@@ -252,10 +252,9 @@ class ProcessTreeMonitor():
             for c in self.parent_proc.children():
                 if c.is_running():
                     c_list.append(c)
-            if not c_list:
-                self.process_tree[self.parent_proc] = []
-            else :
-                self.process_tree[self.parent_proc] = c_list
+            self.process_tree[self.parent_proc] = c_list
+        else :
+            self.process_tree = {}
         old_dict = self.process_tree.copy()
 
         for childs in old_dict.values():
