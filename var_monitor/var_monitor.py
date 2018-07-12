@@ -264,16 +264,16 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 
 class ProcessTreeMonitor():
     def __init__(self, proc, var_list, **kwargs):
-        #print ("Init_ : ", proc, var_list, kwargs)
+        print ("Init_ : ", proc, var_list, kwargs)
+
         self.parent_proc = proc
         self.kwargs = kwargs
 
         print ("_______ <33333 _______")
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
+        #self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
-
-        #self.process_tree = self.parent_proc.children()
 
         if 'log_file' in kwargs:
             if os.path.exists(kwargs['log_file']):
@@ -282,14 +282,6 @@ class ProcessTreeMonitor():
         else:
             self._log_file = sys.stdout
         self.lock = threading.RLock()
-
-    def create_process_tree(self):
-        pass
-        for child in self.process_tree:
-            if child.children != []:
-                self.process_tree[child].append(child.children())
-        print ("Process tree : ", self.process_tree)
-
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
@@ -339,7 +331,7 @@ class ProcessTreeMonitor():
         self.update_summary_values()
 
     def update_IO_values(self):
-        pass
+
 
 
     def write_log(self, log_message):
@@ -355,7 +347,6 @@ class ProcessTreeMonitor():
         self._log_file.write(self.get_headers())
 
         time_report = datetime.datetime.now()
-        self.create_process_tree()
 
         while self.proc_is_running():
             try:
