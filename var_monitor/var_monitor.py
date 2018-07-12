@@ -338,7 +338,7 @@ class ProcessTreeMonitor():
             d_l = self.update_process_tree()
 
             if d_l :
-                print (d_l)
+                print ("Dead proc : ", d_l)
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
