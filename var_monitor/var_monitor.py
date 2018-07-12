@@ -47,6 +47,8 @@ class VarMonitor(object):
         else:
             return False
 
+
+
     '''
     def update_value(self, some_process):
         raise Exception('method not implemented!!')
@@ -129,7 +131,10 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value = sum(self.var_value_dict.values())
 
     def update_value(self, some_process):
-        cur_val = self.get_process_value(some_process)
+        if self.is_parent(some_process):
+            cur_val = self.get_process_value(some_process)
+        else:
+            cur_val = 0
         cur_pid = some_process.pid
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
@@ -151,14 +156,28 @@ class CumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
-class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
+class ParentOnlyCumulativeVarMonitor(VarMonitor):
+    def reset_values(self, parent):
+        self.var_value = 0.0
+        self.var_value_dict = {}
+        self.report_value = 0.0
+        self.summary_value = 0.0
+        self.backup_count = 0
+
+    def get_process_value(self, some_process):
+        raise Exception('Base class does not have this method implemented')
+
+    def set_value_from_value_dict(self):
+        # As we have accumulated data for each process
+        # it's reasonable to assume that the default aggregator is the sum
+        self.var_value = sum(self.var_value_dict.values())
+
     def update_value(self, some_process):
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
-        else :
+        else:
             cur_val = 0
         cur_pid = some_process.pid
-
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             # if the current value is lower than the already existent, it means
@@ -172,6 +191,11 @@ class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
 
         self.set_value_from_value_dict()
 
+    def update_report_value(self):
+        self.report_value = self.var_value
+
+    def update_summary_value(self):
+        self.summary_value = self.var_value
 
 class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor,MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
@@ -247,9 +271,12 @@ class ProcessTreeMonitor():
 
         print ("_______ <33333 _______")
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
-        self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
+        #self.parent_only = [TotalIOReadMonitor('total_io_read', self), TotalIOWriteMonitor('total_io_write', self) ]
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
+
+        self.process_tree = self.parent_proc.children()
+
         if 'log_file' in kwargs:
             if os.path.exists(kwargs['log_file']):
                 raise Exception('File {} already exists'.format(kwargs['log_file']))
@@ -257,6 +284,13 @@ class ProcessTreeMonitor():
         else:
             self._log_file = sys.stdout
         self.lock = threading.RLock()
+
+    def create_process_tree(self):
+        for child in self.process_tree:
+            if child.children != []:
+                self.process_tree[child].append(child.children())
+        print ("Process tree : ", self.process_tree)
+
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
@@ -305,6 +339,10 @@ class ProcessTreeMonitor():
         # update summary values
         self.update_summary_values()
 
+    def update_IO_values(self):
+
+
+
     def write_log(self, log_message):
         self.lock.acquire()
         try:
@@ -318,6 +356,7 @@ class ProcessTreeMonitor():
         self._log_file.write(self.get_headers())
 
         time_report = datetime.datetime.now()
+        self.create_process_tree()
 
         while self.proc_is_running():
             try:
