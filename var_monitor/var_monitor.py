@@ -253,7 +253,7 @@ class ProcessTreeMonitor():
         for child in self.process_tree:
             if child.children != []:
                 self.process_tree[child] = child.children()
-                print ("miau")
+                print ("children of ",child," -- ", child.children())
         print ("Process tree : ", self.process_tree)
 
     def update_values(self, some_process):
