@@ -254,11 +254,11 @@ class ProcessTreeMonitor():
         for childs in old_dict.values():
             for c in childs:
                 if c.is_running() :
-                    pass
+                    if c.children():
+                        self.process_tree[c] = c.children()
                 else:
                     print ("rip ", c.pid)
-                if c.children():
-                    self.process_tree[c] = c.children()
+
 
 
     def update_values(self, some_process):
