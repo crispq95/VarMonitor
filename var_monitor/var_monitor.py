@@ -229,7 +229,7 @@ VAR_MONITOR_DICT = OrderedDict([('max_vms', MaxVMSMonitor),
 class ProcessTreeMonitor():
 
     def __init__(self, proc, var_list, **kwargs):
-        print ("Init_ : ", proc, var_list, kwargs)
+        #print ("Init_ : ", proc, var_list, kwargs)
 
         self.parent_proc = proc
         self.kwargs = kwargs
@@ -244,9 +244,9 @@ class ProcessTreeMonitor():
             self._log_file = sys.stdout
         self.lock = threading.RLock()
 
-        self.process_tree = {self.parent_proc:self.parent_proc.children()}
+        self.process_tree = {self.parent_proc:None}
 
-    def create_process_tree(self):
+    def update_process_tree(self):
         for child in self.process_tree:
             if child.children != []:
                 self.process_tree[child].append(child.children())
@@ -311,10 +311,10 @@ class ProcessTreeMonitor():
 
     def start(self):
         self._log_file.write(self.get_headers())
-        self.create_process_tree()
         time_report = datetime.datetime.now()
 
         while self.proc_is_running():
+            self.update_process_tree()
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
