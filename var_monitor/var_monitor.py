@@ -47,7 +47,7 @@ class VarMonitor(object):
         else:
             return False
 
-     '''       
+    '''       
     def create_process_tree(self):
         for child in self.process_tree:
             if child.children != []:
