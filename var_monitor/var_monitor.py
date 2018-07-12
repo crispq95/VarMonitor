@@ -173,7 +173,7 @@ class ParentOnlyCumulativeVarMonitor(CumulativeVarMonitor):
         self.set_value_from_value_dict()
 
 
-class TotalIOReadMonitor(CumulativeVarMonitor,MemoryVarMonitor):
+class TotalIOReadMonitor(ParentOnlyCumulativeVarMonitor,MemoryVarMonitor):
     def get_process_value(self, some_process): return some_process.io_counters().read_chars
 
 
