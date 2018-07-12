@@ -273,7 +273,7 @@ class ProcessTreeMonitor():
         self.report_lapse = kwargs.get('report_lapse', REPORT_LAPSE)
         self.check_lapse = kwargs.get('check_lapse', CHECK_LAPSE)
 
-        self.process_tree = self.parent_proc.children()
+        #self.process_tree = self.parent_proc.children()
 
         if 'log_file' in kwargs:
             if os.path.exists(kwargs['log_file']):
@@ -284,6 +284,7 @@ class ProcessTreeMonitor():
         self.lock = threading.RLock()
 
     def create_process_tree(self):
+        pass
         for child in self.process_tree:
             if child.children != []:
                 self.process_tree[child].append(child.children())
