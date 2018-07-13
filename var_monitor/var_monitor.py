@@ -377,7 +377,6 @@ class ProcessTreeMonitor():
         self.init_process_tree()
 
         while self.proc_is_running():
-            self.update_process_tree()
 
             try:
                 self.update_all_values()
@@ -387,6 +386,7 @@ class ProcessTreeMonitor():
             # print usage if needed
             now = datetime.datetime.now()
             if (now - time_report).total_seconds() > self.report_lapse:
+                self.update_process_tree()
                 self.write_log(self.get_report_values())
                 self.clean_report_values()
                 time_report = now
