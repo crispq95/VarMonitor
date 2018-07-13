@@ -335,7 +335,7 @@ class ProcessTreeMonitor():
         if temp_dead_childs:
             dead_childs[self.parent_proc] = temp_dead_childs
 
-        aux_dic = new_process_tree.copy()
+        aux_dic = self.process_tree.copy()
 
         for key,childs in  aux_dic.items():
             child_list = []
