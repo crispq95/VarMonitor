@@ -270,6 +270,7 @@ class ProcessTreeMonitor():
             temp_dead_childs = []
 
             for child in childs:
+                print ("CHILD", child)
                 if child.is_running():
                     child_list.append(child.pid)
                 else :
