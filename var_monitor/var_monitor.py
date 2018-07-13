@@ -247,6 +247,7 @@ class ProcessTreeMonitor():
         self.process_tree = {}
 
     def update_process_tree(self):
+        print("UPDATE TREE...")
         dead_childs = {}
         child_list = []
         temp_dead_childs = []
