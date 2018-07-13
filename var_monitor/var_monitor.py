@@ -147,33 +147,11 @@ class CumulativeVarMonitor(VarMonitor):
         resta = 0
 
         if d_childs:
-            #print("The process ", some_process.pid, " has those dead childs : ", d_childs)
             for c in d_childs:
-                resta += self.var_value_dict[c.pid]
                 if c.pid in self.var_value_dict:
+                    resta += self.var_value_dict[c.pid]
                     self.var_value_dict.pop(c.pid)
             self.reset_dead_childs(some_process)
-
-        '''
-        if self.is_parent(some_process):
-            cur_val = self.get_process_value(some_process)
-        else :
-            curr_val = 0
-        cur_pid = some_process.pid
-        '''
-
-
-        '''
-        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
-            # if the current value is lower than the already existent, it means
-            # that the pid has been reused
-            # move the old value to a backup
-            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
-            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
-            self.backup_count += 1
-
-        self.var_value_dict[cur_pid] = cur_val
-        '''
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             self.var_value_dict[cur_pid] += cur_val
