@@ -358,7 +358,7 @@ class ProcessTreeMonitor():
                     if key in dead_childs:
                         dead_childs[key].append(child)
                     else :
-                        dead_childs[key] = child
+                        dead_childs[key] = [child]
 
         self.process_tree = new_process_tree
         #print ("PROCESS TREE : ", self.process_tree)
