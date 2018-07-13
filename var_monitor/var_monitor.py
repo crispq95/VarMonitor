@@ -154,9 +154,9 @@ class CumulativeVarMonitor(VarMonitor):
             # if the current value is lower than the already existent, it means
             # that the pid has been reused
             # move the old value to a backup
-            #bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
-            #self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
-            #self.backup_count += 1
+            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
+            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
+            self.backup_count += 1
 
 
         self.reset_dead_childs(some_process)
