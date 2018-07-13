@@ -269,8 +269,8 @@ class ProcessTreeMonitor():
             child_list = []
             temp_dead_childs = []
 
+            print ("CHILD", childs)
             for child in childs:
-                print ("CHILD", child)
                 if child.is_running():
                     child_list.append(child.pid)
                 else :
