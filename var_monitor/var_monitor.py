@@ -150,6 +150,7 @@ class CumulativeVarMonitor(VarMonitor):
             curr_val = 0
         cur_pid = some_process.pid
 
+        '''
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             # if the current value is lower than the already existent, it means
             # that the pid has been reused
@@ -158,9 +159,14 @@ class CumulativeVarMonitor(VarMonitor):
             self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
             self.backup_count += 1
 
-
-        self.reset_dead_childs(some_process)
         self.var_value_dict[cur_pid] = cur_val
+        '''
+        self.reset_dead_childs(some_process)
+
+        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
+            self.var_value_dict[cur_pid] += cur_val
+        else:
+            self.var_value_dict[cur_pid] = cur_val
 
         self.set_value_from_value_dict()
 
