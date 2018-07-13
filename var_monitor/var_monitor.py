@@ -254,9 +254,9 @@ class ProcessTreeMonitor():
 
         for c in self.parent_proc.children():
             if c.is_running() : #si el hijo esta vivo
-                child_list.append(c)
+                child_list.append(c.pid)
             else :
-                temp_dead_childs.append(c)
+                temp_dead_childs.append(c.pid)
 
         if child_list :
             self.process_tree[self.parent_proc] = child_list
