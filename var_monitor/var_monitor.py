@@ -230,7 +230,6 @@ class ProcessTreeMonitor():
 
     def __init__(self, proc, var_list, **kwargs):
         #print ("Init_ : ", proc, var_list, kwargs)
-
         self.parent_proc = proc
         self.kwargs = kwargs
         self.monitor_list = [VAR_MONITOR_DICT[var](var, self) for var in var_list]
@@ -288,36 +287,6 @@ class ProcessTreeMonitor():
                         dead_childs[key] = child
 
 
-        #print ("PROCESS TREE : ", self.process_tree)
-
-        ''' 
-        if self.parent_proc.children() :
-            c_list = []
-            for c in self.parent_proc.children():
-                if c.is_running():
-                    c_list.append(c)
-            self.process_tree[self.parent_proc] = c_list
-        else :
-            self.process_tree = {}
-        old_dict = self.process_tree.copy()
-
-        for childs in old_dict.values():
-            for c in childs:
-                c_list = []
-                d_list = []
-                if c.is_running() and c.children():
-                    for aux in c.children():
-                        if aux.is_running():
-                            c_list.append(aux)
-                        else :
-                            d_list.append(aux)
-                    self.process_tree[c] = c_list
-                    if d_list:
-                        dead_procs[c] = d_list
-        '''
-
-
-
     def update_process_tree(self):
         dead_childs = {}
         child_list = []
@@ -361,8 +330,8 @@ class ProcessTreeMonitor():
                         dead_childs[key] = [child]
 
         self.process_tree = new_process_tree
-        print ("PROCESS TREE : ", self.process_tree)
-        print ("DEAD CHILDS : ", dead_childs)
+        #print ("PROCESS TREE : ", self.process_tree)
+        #print ("DEAD CHILDS : ", dead_childs)
 
         return dead_childs
 
@@ -431,8 +400,8 @@ class ProcessTreeMonitor():
         while self.proc_is_running():
             d_l = self.update_process_tree()
 
-            if d_l :
-                print ("Dead proc : ", d_l)
+            print ("Dead proc : ", d_l)
+
             try:
                 self.update_all_values()
             except psutil.AccessDenied:
