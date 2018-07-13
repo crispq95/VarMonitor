@@ -47,6 +47,10 @@ class VarMonitor(object):
         else:
             return False
 
+    #returns a list with the dead child of a process
+    def get_dead_childs(self, some_process):
+        if some_process in self.monitor.dead_childs:
+            return self.monitor.dead_childs[some_process]
 
 
     '''
@@ -131,6 +135,11 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value = sum(self.var_value_dict.values())
 
     def update_value(self, some_process):
+        d_childs = self.get_dead_childs(some_process)
+
+        if d_childs:
+            print("The process ",some_process," has those dead childs : ", d_childs)
+
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
         else :
@@ -377,6 +386,7 @@ class ProcessTreeMonitor():
         self.init_process_tree()
 
         while self.proc_is_running():
+            self.update_process_tree()
 
             try:
                 self.update_all_values()
@@ -386,15 +396,17 @@ class ProcessTreeMonitor():
             # print usage if needed
             now = datetime.datetime.now()
             if (now - time_report).total_seconds() > self.report_lapse:
-                self.update_process_tree()
+
                 self.write_log(self.get_report_values())
                 self.clean_report_values()
                 time_report = now
+
+                '''
                 print ("PROCESS TREE : ", self.process_tree)
                 print (" ")
                 print ("DEAD CHILDS : ", self.dead_childs)
                 print (" ")
-
+                '''
             time.sleep(self.check_lapse)
 
         self.parent_proc.wait()
