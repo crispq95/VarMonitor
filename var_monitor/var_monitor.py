@@ -150,7 +150,7 @@ class CumulativeVarMonitor(VarMonitor):
             curr_val = 0
         cur_pid = some_process.pid
 
-        #if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
+        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             # if the current value is lower than the already existent, it means
             # that the pid has been reused
             # move the old value to a backup
