@@ -269,16 +269,17 @@ class ProcessTreeMonitor():
             child_list = []
             temp_dead_childs = []
 
-            for child in childs:
-                if child.is_running():
-                    child_list.append(child)
-                else :
-                    temp_dead_childs.append(child)
+            if childs.children():
+                for child in childs.children():
+                    if child.is_running():
+                        child_list.append(child)
+                    else :
+                        temp_dead_childs.append(child)
 
-            if child_list:
-                self.process_tree[key] = child_list
-            if temp_dead_childs:
-                dead_childs[key] = temp_dead_childs
+                if child_list:
+                    self.process_tree[key] = child_list
+                if temp_dead_childs:
+                    dead_childs[key] = temp_dead_childs
 
 
         print ("PROCESS TREE : ", self.process_tree)
