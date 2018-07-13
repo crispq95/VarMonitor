@@ -424,7 +424,7 @@ class ProcessTreeMonitor():
         self._log_file.write(self.get_headers())
         time_report = datetime.datetime.now()
 
-        init_process_tree()
+        self.init_process_tree()
 
         while self.proc_is_running():
             d_l = self.update_process_tree()
