@@ -144,6 +144,7 @@ class CumulativeVarMonitor(VarMonitor):
 
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
+        resta = 0
 
         if d_childs:
             #print("The process ", some_process.pid, " has those dead childs : ", d_childs)
@@ -178,6 +179,9 @@ class CumulativeVarMonitor(VarMonitor):
             self.var_value_dict[cur_pid] += cur_val
         else:
             self.var_value_dict[cur_pid] = cur_val
+
+        if resta != 0:
+            self.var_value_dict[cur_pid] -= resta
 
         self.set_value_from_value_dict()
 
