@@ -270,7 +270,7 @@ class ProcessTreeMonitor():
             temp_dead_childs = []
 
             for child in childs:
-                if child.children():
+                if child.children() and child.is_running():
                     for c in child.children() :
                         if child.is_running():
                             child_list.append(c)
