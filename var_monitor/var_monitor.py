@@ -390,6 +390,10 @@ class ProcessTreeMonitor():
                 self.write_log(self.get_report_values())
                 self.clean_report_values()
                 time_report = now
+                print ("PROCESS TREE : ", self.process_tree)
+                print (" ")
+                print ("DEAD CHILDS : ", self.dead_childs)
+                print (" ")
 
             time.sleep(self.check_lapse)
 
