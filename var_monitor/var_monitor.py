@@ -138,7 +138,7 @@ class CumulativeVarMonitor(VarMonitor):
         d_childs = self.get_dead_childs(some_process)
 
         if d_childs:
-            print("The process ",some_process," has those dead childs : ", d_childs)
+            print("The process ",some_process.pid," has those dead childs : ", d_childs)
 
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
@@ -387,6 +387,8 @@ class ProcessTreeMonitor():
 
         while self.proc_is_running():
             self.update_process_tree()
+            print ("OUTSIDE D_CHILDS : ", self.dead_childs)
+            print (" ")
 
             try:
                 self.update_all_values()
