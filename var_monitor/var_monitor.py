@@ -52,6 +52,10 @@ class VarMonitor(object):
         if some_process in self.monitor.dead_childs:
             return self.monitor.dead_childs[some_process]
 
+    def reset_dead_childs(self, some_process):
+        if some_process in self.monitor.dead_childs:
+            self.monitor.dead_childs.pop(some_process)
+
 
     '''
     def update_value(self, some_process):
@@ -154,6 +158,8 @@ class CumulativeVarMonitor(VarMonitor):
             self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
             self.backup_count += 1
 
+
+        self.reset_dead_childs(some_process)
         self.var_value_dict[cur_pid] = cur_val
 
         self.set_value_from_value_dict()
@@ -388,10 +394,12 @@ class ProcessTreeMonitor():
         while self.proc_is_running():
             self.update_process_tree()
 
+            '''
             print ("PROCESS TREE : ", self.process_tree)
             if self.dead_childs:
                 print ("OUTSIDE D_CHILDS : ", self.dead_childs)
                 print (" ")
+            '''
 
             try:
                 self.update_all_values()
