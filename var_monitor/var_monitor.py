@@ -271,7 +271,7 @@ class ProcessTreeMonitor():
 
             for child in childs:
                 if child.children():
-                    for c in child :
+                    for c in child.children() :
                         if child.is_running():
                             child_list.append(c)
                         else :
