@@ -244,54 +244,35 @@ class ProcessTreeMonitor():
         self.lock = threading.RLock()
 
         self.process_tree = {}
+        self.dead_childs = {}
 
     def init_process_tree(self):
-        dead_childs = {}
         child_list = []
-        temp_dead_childs = []
 
         for c in self.parent_proc.children():
             if c.is_running() : #si el hijo esta vivo
                 child_list.append(c)
-            else :
-                temp_dead_childs.append(c)
 
         if child_list :
             self.process_tree[self.parent_proc] = child_list
-        if temp_dead_childs:
-            dead_childs[self.parent_proc] = temp_dead_childs
-
         aux_dic = self.process_tree.copy()
 
         for key,childs in  aux_dic.items():
             child_list = []
-            temp_dead_childs = []
-
             for child in childs:
                 if child.is_running():
                     if child.children():
                         for c in child.children() :
                             if child.is_running():
                                 child_list.append(c)
-                            else :
-                                temp_dead_childs.append(c)
-
                         if child_list:
                             self.process_tree[child] = child_list
-                        if temp_dead_childs:
-                            dead_childs[child] = temp_dead_childs
-                else :
-                    if key in dead_childs:
-                        dead_childs[key].append(child)
-                    else :
-                        dead_childs[key] = child
-
 
     def update_process_tree(self):
-        dead_childs = {}
         child_list = []
         temp_dead_childs = []
         new_process_tree = {}
+        self.dead_childs = {}
 
         for c in self.parent_proc.children():
             if c.is_running() : #si el hijo esta vivo
@@ -302,7 +283,7 @@ class ProcessTreeMonitor():
         if child_list :
             new_process_tree[self.parent_proc] = child_list
         if temp_dead_childs:
-            dead_childs[self.parent_proc] = temp_dead_childs
+            self.dead_childs[self.parent_proc] = temp_dead_childs
 
         aux_dic = self.process_tree.copy()
 
@@ -322,18 +303,16 @@ class ProcessTreeMonitor():
                         if child_list:
                             new_process_tree[child] = child_list
                         if temp_dead_childs:
-                            dead_childs[child] = temp_dead_childs
+                            self.dead_childs[child] = temp_dead_childs
                 else :
                     if key in dead_childs:
-                        dead_childs[key].append(child)
+                        self.dead_childs[key].append(child)
                     else :
-                        dead_childs[key] = [child]
+                        self.dead_childs[key] = [child]
 
         self.process_tree = new_process_tree
         #print ("PROCESS TREE : ", self.process_tree)
         #print ("DEAD CHILDS : ", dead_childs)
-
-        return dead_childs
 
     def update_values(self, some_process):
         for monitor in self.monitor_list:
@@ -398,9 +377,7 @@ class ProcessTreeMonitor():
         self.init_process_tree()
 
         while self.proc_is_running():
-            d_l = self.update_process_tree()
-
-            print ("Dead proc : ", d_l)
+            self.update_process_tree()
 
             try:
                 self.update_all_values()
