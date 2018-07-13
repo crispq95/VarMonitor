@@ -305,7 +305,7 @@ class ProcessTreeMonitor():
                         if temp_dead_childs:
                             self.dead_childs[child] = temp_dead_childs
                 else :
-                    if key in dead_childs:
+                    if key in self.dead_childs:
                         self.dead_childs[key].append(child)
                     else :
                         self.dead_childs[key] = [child]
