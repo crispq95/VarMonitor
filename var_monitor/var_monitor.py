@@ -384,6 +384,7 @@ class ProcessTreeMonitor():
         time_report = datetime.datetime.now()
 
         self.init_process_tree()
+        print ("PROCESS TREE : ", self.process_tree)
 
         while self.proc_is_running():
             self.update_process_tree()
