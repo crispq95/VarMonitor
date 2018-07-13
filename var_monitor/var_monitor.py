@@ -361,7 +361,9 @@ class ProcessTreeMonitor():
                         dead_childs[key] = [child]
 
         self.process_tree = new_process_tree
-        #print ("PROCESS TREE : ", self.process_tree)
+        print ("PROCESS TREE : ", self.process_tree)
+        print ("DEAD CHILDS : ", dead_childs)
+
         return dead_childs
 
     def update_values(self, some_process):
