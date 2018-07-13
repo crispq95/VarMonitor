@@ -265,7 +265,7 @@ class ProcessTreeMonitor():
 
         aux_dic = self.process_tree.copy()
 
-        for childs,key in  aux_dic.values(),aux_dic.keys():
+        for key,childs in  aux_dic.items():
             child_list = []
             temp_dead_childs = []
 
