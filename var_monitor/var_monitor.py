@@ -160,11 +160,7 @@ class CumulativeVarMonitor(VarMonitor):
 
 
         self.reset_dead_childs(some_process)
-
-        if cur_pid in self.var_value_dict:
-            self.var_value_dict[cur_pid] += cur_val
-        else :
-            self.var_value_dict[cur_pid] = cur_val
+        self.var_value_dict[cur_pid] = cur_val
 
         self.set_value_from_value_dict()
 
