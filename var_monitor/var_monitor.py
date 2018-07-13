@@ -387,8 +387,9 @@ class ProcessTreeMonitor():
 
         while self.proc_is_running():
             self.update_process_tree()
-            print ("OUTSIDE D_CHILDS : ", self.dead_childs)
-            print (" ")
+            if self.dead_childs:
+                print ("OUTSIDE D_CHILDS : ", self.dead_childs)
+                print (" ")
 
             try:
                 self.update_all_values()
