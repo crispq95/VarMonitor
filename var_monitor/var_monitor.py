@@ -137,7 +137,7 @@ class CumulativeVarMonitor(VarMonitor):
         # As we have accumulated data for each process
         # it's reasonable to assume that the default aggregator is the sum
         self.var_value = sum(self.var_value_dict.values())
-        var_value_dict = {}
+        self.var_value_dict = {}
 
     def update_value(self, some_process):
         d_childs = self.get_dead_childs(some_process)
