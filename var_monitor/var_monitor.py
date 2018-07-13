@@ -280,7 +280,7 @@ class ProcessTreeMonitor():
                 dead_childs[key] = temp_dead_childs
 
 
-        prtint (self.process_tree)
+        prtint ("PROCESS TREE : ", self.process_tree)
         return dead_childs
 
 
