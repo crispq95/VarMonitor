@@ -141,14 +141,21 @@ class CumulativeVarMonitor(VarMonitor):
     def update_value(self, some_process):
         d_childs = self.get_dead_childs(some_process)
 
-        if d_childs:
-            print("The process ",some_process.pid," has those dead childs : ", d_childs)
+        cur_val = self.get_process_value(some_process)
+        cur_pid = some_process.pid
 
+        '''
         if self.is_parent(some_process):
             cur_val = self.get_process_value(some_process)
         else :
             curr_val = 0
         cur_pid = some_process.pid
+        '''
+        if d_childs:
+            print("The process ", some_process.pid, " has those dead childs : ", d_childs)
+            for c in d_childs:
+                cur_val -= self.var_value_dict[c.pid]
+            self.reset_dead_childs(some_process)
 
         '''
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
@@ -161,7 +168,6 @@ class CumulativeVarMonitor(VarMonitor):
 
         self.var_value_dict[cur_pid] = cur_val
         '''
-        self.reset_dead_childs(some_process)
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             self.var_value_dict[cur_pid] += cur_val
