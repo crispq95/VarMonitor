@@ -157,6 +157,7 @@ class CumulativeVarMonitor(VarMonitor):
 
 
         if d_childs:
+            self.resta = 0
             for c in d_childs:
                 if c.pid in self.var_value_dict:
                     self.resta += self.var_value_dict.pop(c.pid)
