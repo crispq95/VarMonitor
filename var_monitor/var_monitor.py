@@ -285,7 +285,6 @@ class ProcessTreeMonitor():
     def update_process_tree(self):
         child_list = []
         temp_dead_childs = []
-        new_process_tree = {}
         self.dead_childs = {}
 
         for c in self.parent_proc.children():
@@ -295,7 +294,7 @@ class ProcessTreeMonitor():
                 temp_dead_childs.append(c)
 
         if child_list :
-            new_process_tree[self.parent_proc] = child_list
+            self.process_tree[self.parent_proc] = child_list
         if temp_dead_childs:
             self.dead_childs[self.parent_proc] = temp_dead_childs
 
