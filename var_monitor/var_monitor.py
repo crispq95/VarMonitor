@@ -317,6 +317,11 @@ class ProcessTreeMonitor():
                             self.process_tree[n] = child_list
                         if temp_dead_childs:
                             self.dead_childs[n] = temp_dead_childs
+                else:
+                    if nodes[0] in self.dead_childs:
+                        self.dead_childs[nodes[0]].append(n)
+                    else:
+                        self.dead_childs[nodes[0]] = [n]
 
         print ("Dead_CHIDLS : ", self.dead_childs)
 
