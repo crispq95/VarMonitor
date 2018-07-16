@@ -340,15 +340,14 @@ class ProcessTreeMonitor():
 
         #print ("DEAD CHILDS ------- : ", self.dead_childs)
 
-
-
+        '''
         print ("OLD PTREE : ", old_process_tree)
         print (" ")
         print ("PROCESS TREE -- ", self.process_tree)
         print ("Dead CHIDLS : ", self.dead_childs)
         print (" ")
 
-        '''
+        
          
 
             actual_child = childs.pop()
