@@ -339,6 +339,7 @@ class ProcessTreeMonitor():
                         self.dead_childs[nodes[0]].append(n)
                     else:
                         self.dead_childs[nodes[0]] = [n]
+                    print (n, " has those childs dead :", self.dead_childs[n])
 
         #print ("DEAD CHILDS ------- : ", self.dead_childs)
 
