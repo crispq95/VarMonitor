@@ -324,6 +324,8 @@ class ProcessTreeMonitor():
                         for child in n.children():
                             if child.is_running():
                                 child_list.append(child)
+                            else :
+                                temp_dead_childs.append(child)
 
                         if child_list:
                             l_act[n] = child_list
