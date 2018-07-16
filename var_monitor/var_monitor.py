@@ -299,8 +299,40 @@ class ProcessTreeMonitor():
         if temp_dead_childs:
             self.dead_childs[self.parent_proc] = temp_dead_childs
 
-        aux_dic = self.process_tree.copy()
+        l_act = self.process_tree.copy()
 
+        while (l_act):
+            nodes = l_act.pop()
+            for n in nodes:
+                if n.children():
+                l_act[n] = n.children()
+                self.process_tree[n] = n.children()
+
+
+        print ("PROCESS TREE : ", self.process_tree)
+
+
+
+
+
+
+
+
+            '''
+
+            actual_child = childs.pop()
+            next_child = actual_child.pop()
+            while (next_child):
+                next_child = childs.pop()
+                if next_child == None :
+                    for bro in psutil.Process(actual_child.ppid()).children():
+                        child_list.append(bro.pid)
+                else :
+                    actual_child = next_child
+            self.process_tree[psutil.Process(actual_child.ppid()).pid] = child_list
+
+
+      
         for key,childs in  aux_dic.items():
             child_list = []
             temp_dead_childs = []
@@ -323,7 +355,7 @@ class ProcessTreeMonitor():
                         self.dead_childs[key].append(child)
                     else :
                         self.dead_childs[key] = [child]
-
+        '''
         self.process_tree = new_process_tree
         #print ("PROCESS TREE : ", self.process_tree)
         #print ("DEAD CHILDS : ", dead_childs)
