@@ -303,9 +303,9 @@ class ProcessTreeMonitor():
         while (l_act):
             nodes = l_act.popitem()
             for n in nodes[1]:
-                child_list = []
-                temp_dead_childs = []
                 if n.is_running():
+                    child_list = []
+                    temp_dead_childs = []
                     if n.children():
                         for child in n.children():
                             if child.is_running():
