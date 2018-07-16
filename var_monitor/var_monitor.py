@@ -314,7 +314,7 @@ class ProcessTreeMonitor():
         l_act = {}
         l_act = self.process_tree.copy()
         if old_process_tree :
-            l_act = old_process_tree.copy()
+            l_act = old_process_tree.copy()[0]
 
         while (l_act):
             nodes = l_act.popitem()
@@ -333,7 +333,6 @@ class ProcessTreeMonitor():
                             self.process_tree[n] = child_list
                         if temp_dead_childs:
                             self.dead_childs[n] = temp_dead_childs
-                            print (n," has those childs dead :", self.dead_childs[n])
                 else:
                     if nodes[0] in self.dead_childs:
                         self.dead_childs[nodes[0]].append(n)
