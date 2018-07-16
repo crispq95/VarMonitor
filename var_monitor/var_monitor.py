@@ -286,6 +286,7 @@ class ProcessTreeMonitor():
         child_list = []
         temp_dead_childs = []
         self.dead_childs = {}
+        old_tree = self.process_tree.copy()
 
         for c in self.parent_proc.children():
             if c.is_running() : #si el hijo esta vivo
@@ -306,8 +307,24 @@ class ProcessTreeMonitor():
             for n in nodes[1]:
                 if n.is_running():
                     if n.children():
-                        l_act[n] = n.children()
-                        self.process_tree[n] = n.children()
+                        for child in n.children():
+                            if child.is_running():
+                                child_list.append(c)
+                            else :
+                                temp_dead_childs.append(c)
+                        if child_list:
+                            l_act[n] = child_list
+                            self.process_tree[n] = child_list
+                        if temp_dead_childs:
+                            self.dead_childs[n] = temp_dead_childs
+                else:
+                    if key in self.dead_childs:
+                        self.dead_childs[key].append(n)
+                    else:
+                        self.dead_childs[key] = [n]
+
+
+
 
 
         print ("PROCESS TREE : ", self.process_tree)
