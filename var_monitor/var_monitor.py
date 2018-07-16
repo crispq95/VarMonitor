@@ -129,6 +129,7 @@ class CumulativeVarMonitor(VarMonitor):
         self.report_value = 0.0
         self.summary_value = 0.0
         self.backup_count = 0
+        self.resta = 0
 
     def get_process_value(self, some_process):
         raise Exception('Base class does not have this method implemented')
@@ -158,7 +159,7 @@ class CumulativeVarMonitor(VarMonitor):
         if d_childs:
             for c in d_childs:
                 if c.pid in self.var_value_dict:
-                    resta += self.var_value_dict.pop(c.pid)
+                    self.resta += self.var_value_dict.pop(c.pid)
             print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
             self.reset_dead_childs(some_process)
 
