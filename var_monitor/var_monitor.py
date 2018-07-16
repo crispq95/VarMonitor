@@ -302,7 +302,7 @@ class ProcessTreeMonitor():
 
         while (l_act):
             print ("miau")
-            nodes = l_act.pop()
+            nodes = l_act.pop(0)
             for n in nodes:
                 if n.children():
                     l_act[n] = n.children()
