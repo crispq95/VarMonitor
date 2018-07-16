@@ -313,7 +313,7 @@ class ProcessTreeMonitor():
         l_act = {}
         l_act = self.process_tree.copy()
         if old_process_tree :
-            l_act = old_tree.copy()
+            l_act = old_process_tree.copy()
 
         while (l_act):
             nodes = l_act.popitem()
