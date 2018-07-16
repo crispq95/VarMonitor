@@ -312,13 +312,7 @@ class ProcessTreeMonitor():
         print ("PROCESS TREE : ", self.process_tree)
 
 
-
-
-
-
-
-
-            '''
+        ''' 
 
             actual_child = childs.pop()
             next_child = actual_child.pop()
@@ -356,7 +350,7 @@ class ProcessTreeMonitor():
                     else :
                         self.dead_childs[key] = [child]
         '''
-        self.process_tree = new_process_tree
+        #self.process_tree = new_process_tree
         #print ("PROCESS TREE : ", self.process_tree)
         #print ("DEAD CHILDS : ", dead_childs)
 
