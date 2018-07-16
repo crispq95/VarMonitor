@@ -302,6 +302,7 @@ class ProcessTreeMonitor():
         l_act = self.process_tree.copy()
 
         while (l_act):
+            print ("miau")
             nodes = l_act.pop()
             for n in nodes:
                 if n.children():
