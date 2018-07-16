@@ -338,7 +338,8 @@ class ProcessTreeMonitor():
 
 
         #print ("PROCESS TREE -- ", self.process_tree)
-        print ("Dead CHIDLS : ", self.dead_childs)
+        if self.dead_childs :
+            print ("Dead CHIDLS : ", self.dead_childs)
         #print (" ")
 
         '''
