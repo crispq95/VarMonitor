@@ -137,6 +137,9 @@ class CumulativeVarMonitor(VarMonitor):
         # As we have accumulated data for each process
         # it's reasonable to assume that the default aggregator is the sum
         self.var_value = sum(self.var_value_dict.values())
+
+        for key,val in var_value_dict.items():
+            print("KEY : ", key, "value : ", val)
         #self.var_value_dict = {}
 
     def update_value(self, some_process):
@@ -292,7 +295,6 @@ class ProcessTreeMonitor():
         child_list = []
         temp_dead_childs = []
         self.dead_childs = {}
-        old_process_tree = {}
         old_process_tree = self.process_tree.copy()
         self.process_tree = {}
 
@@ -308,9 +310,10 @@ class ProcessTreeMonitor():
             self.dead_childs[self.parent_proc] = temp_dead_childs
 
         l_act = {}
-        l_act = self.process_tree.copy()
-        if old_process_tree:
-            l_act = old_process_tree
+        if (old_process_tree):
+            l_act = old_process_tree.popitem()
+        else :
+            l_act = self.process_tree.copy()
 
         while (l_act):
             nodes = l_act.popitem()
@@ -339,10 +342,9 @@ class ProcessTreeMonitor():
 
 
 
-        #print ("PROCESS TREE -- ", self.process_tree)
-        if self.dead_childs :
-            print ("Dead CHIDLS : ", self.dead_childs)
-        #print (" ")
+        print ("PROCESS TREE -- ", self.process_tree)
+        print ("Dead CHIDLS : ", self.dead_childs)
+        print (" ")
 
         '''
          
@@ -424,8 +426,7 @@ class ProcessTreeMonitor():
         children_process_list = self.parent_proc.children(recursive=True)
         for children_process in children_process_list:
             try:
-                if children_process.is_running():
-                    self.update_values(children_process)
+                self.update_values(children_process)
             except:
                 pass
 
