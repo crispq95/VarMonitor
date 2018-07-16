@@ -304,6 +304,8 @@ class ProcessTreeMonitor():
             nodes = l_act.popitem()
             print ("NODES : ",nodes)
             for n in nodes:
+                print ("SINGLE NODE :", n)
+                print (" ")
                 if n.children():
                     l_act[n] = n.children()
                     self.process_tree[n] = n.children()
