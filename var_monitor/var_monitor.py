@@ -164,16 +164,13 @@ class CumulativeVarMonitor(VarMonitor):
             self.reset_dead_childs(some_process)
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
-            self.var_value_dict[cur_pid] += cur_val
-        else:
             self.var_value_dict[cur_pid] = cur_val
 
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
 
 
-        if self.is_parent(some_process):
-            self.set_value_from_value_dict()
+        self.set_value_from_value_dict()
 
     def update_report_value(self):
         self.report_value = self.var_value
