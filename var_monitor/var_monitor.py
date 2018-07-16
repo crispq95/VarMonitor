@@ -150,6 +150,7 @@ class CumulativeVarMonitor(VarMonitor):
         #if d_childs :
         #    print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
 
+
         if d_childs:
             for c in d_childs:
                 if c.pid in self.var_value_dict:
@@ -163,6 +164,8 @@ class CumulativeVarMonitor(VarMonitor):
         else:
             self.var_value_dict[cur_pid] = cur_val
 
+        if some_process.status = 'terminated':
+            cur_val= 0
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
 
