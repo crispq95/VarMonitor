@@ -149,6 +149,7 @@ class CumulativeVarMonitor(VarMonitor):
         cur_pid = some_process.pid
         resta = 0
 
+        print ("SOME PROCESS : ", some_process)
 
         #if d_childs :
         #    print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
