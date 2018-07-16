@@ -324,19 +324,11 @@ class ProcessTreeMonitor():
                         for child in n.children():
                             if child.is_running():
                                 child_list.append(child)
-                            else :
-                                temp_dead_childs.append(child)
                         if child_list:
                             l_act[n] = child_list
                             self.process_tree[n] = child_list
-                        if temp_dead_childs:
-                            self.dead_childs[n] = temp_dead_childs
-                else:
-                    if nodes[0] in self.dead_childs:
-                        self.dead_childs[nodes[0]].append(n)
-                    else:
-                        self.dead_childs[nodes[0]] = [n]
-                        print("___RIP____")
+                    else :
+                        self.process_tree[n] = []
 
         if self.dead_childs:
             print (" DEAD CHILD :", self.dead_childs)
@@ -351,20 +343,6 @@ class ProcessTreeMonitor():
         print (" ")
 
         
-         
-
-            actual_child = childs.pop()
-            next_child = actual_child.pop()
-            while (next_child):
-                next_child = childs.pop()
-                if next_child == None :
-                    for bro in psutil.Process(actual_child.ppid()).children():
-                        child_list.append(bro.pid)
-                else :
-                    actual_child = next_child
-            self.process_tree[psutil.Process(actual_child.ppid()).pid] = child_list
-
-
       
         for key,childs in  aux_dic.items():
             child_list = []
