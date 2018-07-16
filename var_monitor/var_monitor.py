@@ -296,7 +296,6 @@ class ProcessTreeMonitor():
         child_list = []
         temp_dead_childs = []
         self.dead_childs = {}
-        old_process_tree =  {}
         old_process_tree = self.process_tree.copy()
         self.process_tree = {}
 
@@ -340,7 +339,8 @@ class ProcessTreeMonitor():
         #print ("DEAD CHILDS ------- : ", self.dead_childs)
 
 
-
+        print ("OLD PTREE : " old_process_tree)
+        print (" ")
         print ("PROCESS TREE -- ", self.process_tree)
         print ("Dead CHIDLS : ", self.dead_childs)
         print (" ")
