@@ -331,6 +331,7 @@ class ProcessTreeMonitor():
                             l_act[n] = child_list
                             self.process_tree[n] = child_list
                         if temp_dead_childs:
+                            print("___RIP_1___")
                             self.dead_childs[n] = temp_dead_childs
                     else:
                         self.process_tree[n] = []
