@@ -325,7 +325,6 @@ class ProcessTreeMonitor():
                             if child.is_running():
                                 child_list.append(child)
                             else :
-                                print("___RIP____")
                                 temp_dead_childs.append(child)
                         if child_list:
                             l_act[n] = child_list
@@ -336,8 +335,8 @@ class ProcessTreeMonitor():
                     if nodes[0] in self.dead_childs:
                         self.dead_childs[nodes[0]].append(n)
                     else:
-                        print ("Se murió ",n," de ", nodes[0])
                         self.dead_childs[nodes[0]] = [n]
+                        print("___RIP____")
 
         if self.dead_childs:
             print (" DEAD CHILD :", self.dead_childs)
