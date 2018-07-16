@@ -313,6 +313,7 @@ class ProcessTreeMonitor():
 
         l_act = {}
         l_act = self.process_tree.copy()
+        print ("OLD PT : ", old_process_tree)
         if old_process_tree :
             l_act = old_process_tree.copy().popitem()
 
