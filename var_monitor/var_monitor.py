@@ -326,6 +326,8 @@ class ProcessTreeMonitor():
                                 child_list.append(child)
                             if child.status == 'terminated':
                                 temp_dead_childs.append(child)
+                            print ("STAUS : ", child.status)
+
                         if child_list:
                             l_act[n] = child_list
                             self.process_tree[n] = child_list
