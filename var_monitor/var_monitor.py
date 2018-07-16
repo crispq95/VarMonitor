@@ -310,7 +310,7 @@ class ProcessTreeMonitor():
         l_act = {}
         if (old_process_tree):
             print ("OPT : ",old_process_tree)
-            l_act = old_process_tree.copy()
+            l_act = old_process_tree.copy()[0]
         else :
             l_act = self.process_tree.copy()
 
@@ -328,15 +328,9 @@ class ProcessTreeMonitor():
                                 temp_dead_childs.append(child)
                         if child_list:
                             l_act[n] = child_list
-                            if n in self.process_tree :
-                                self.process_tree[n].append(child_list)
-                            else:
-                                self.process_tree[n] = child_list
-                        if self.dead_childs:
-                            if n in temp_dead_childs :
-                                self.dead_childs[n].append(temp_dead_childs)
-                            else :
-                                self.dead_childs[n] = temp_dead_childs
+                            self.process_tree[n] = child_list
+                        if temp_dead_childs:
+                            self.dead_childs[n] = temp_dead_childs
                 else:
                     if nodes[0] in self.dead_childs:
                         self.dead_childs[nodes[0]].append(n)
