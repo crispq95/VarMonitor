@@ -167,9 +167,9 @@ class CumulativeVarMonitor(VarMonitor):
         # if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
         self.var_value_dict[cur_pid] = cur_val - resta
 
-        print ("ANTES : ", self.var_value_dict)
+        print ("ANTES : ", self.var_value)
         self.set_value_from_value_dict()
-        print ("DESPUES : ", self.var_value_dict)
+        print ("DESPUES : ", self.var_value)
 
     def update_report_value(self):
         self.report_value = self.var_value
