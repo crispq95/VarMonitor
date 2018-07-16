@@ -293,7 +293,7 @@ class ProcessTreeMonitor():
         temp_dead_childs = []
         self.dead_childs = {}
         old_process_tree = {}
-        old_process_tree.append(self.process_tree.copy())
+        old_process_tree = self.process_tree.copy()
         self.process_tree = {}
 
         for c in self.parent_proc.children():
