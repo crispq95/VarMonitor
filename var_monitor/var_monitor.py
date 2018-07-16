@@ -158,6 +158,7 @@ class CumulativeVarMonitor(VarMonitor):
         if d_childs:
             for c in d_childs:
                 if c.pid in self.var_value_dict:
+                    pass
                     #resta += self.var_value_dict[c.pid]
                     #self.var_value_dict.pop(c.pid)
             print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
