@@ -329,8 +329,9 @@ class ProcessTreeMonitor():
                     else:
                         self.dead_childs[nodes[0]] = [n]
 
+        if self.dead_childs :
+            print ("DEAD CHILDS ------- : ", self.dead_childs)
 
-        print ("DEAD CHILDS ------- : ", self.dead_childs)
         '''
 
         print ("PROCESS TREE -- ", self.process_tree)
