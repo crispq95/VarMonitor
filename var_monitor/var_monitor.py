@@ -303,7 +303,7 @@ class ProcessTreeMonitor():
         while (l_act):
             nodes = l_act.popitem()
             print ("NODES : ",nodes)
-            for n in nodes:
+            for n in nodes[1]:
                 print ("SINGLE NODE :", n)
                 print (" ")
                 if n.children():
