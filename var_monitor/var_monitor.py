@@ -148,7 +148,7 @@ class CumulativeVarMonitor(VarMonitor):
 
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
-        resta_test = 0
+        resta = 0
 
         #print ("SOME PROCESS : ", some_process)
 
@@ -157,17 +157,16 @@ class CumulativeVarMonitor(VarMonitor):
 
 
         if d_childs:
-            self.resta = 0
             for c in d_childs:
                 if c.pid in self.var_value_dict:
-                    self.resta += self.var_value_dict[c.pid]
-            print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",self.resta)
+                    resta += self.var_value_dict[c.pid]
+            print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
             self.reset_dead_childs(some_process)
 
         #
         #
         # if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
-        self.var_value_dict[cur_pid] = cur_val - self.resta
+        self.var_value_dict[cur_pid] = cur_val - resta
 
         #print ("(",self.resta,")  ANTES : ", self.var_value)
         #print ("(", self.resta, ")  ANTES : ", self.var_value)
@@ -337,17 +336,6 @@ class ProcessTreeMonitor():
                     temp_dead_childs.append(child)
 
             self.dead_childs[parent] = temp_dead_childs
-
-
-
-        if old_process_tree != self.process_tree:
-            #print ("PROCESS TREE -- ", self.process_tree)
-            #print (" ")
-            #print ("OLD PROC TREE -- ", old_process_tree)
-            #print ("")
-            print ("------- DEAD CHILDS ------- : ", self.dead_childs)
-            print ("")
-
 
         '''
         print ("OLD PTREE : ", old_process_tree)
