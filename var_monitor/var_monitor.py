@@ -308,10 +308,7 @@ class ProcessTreeMonitor():
             self.dead_childs[self.parent_proc] = temp_dead_childs
 
         l_act = {}
-        if (old_process_tree):
-            l_act = old_process_tree.copy()
-        else :
-            l_act = self.process_tree.copy()
+        l_act = self.process_tree.copy()
 
         while (l_act):
             nodes = l_act.popitem()
@@ -340,9 +337,9 @@ class ProcessTreeMonitor():
 
 
 
-        print ("PROCESS TREE -- ", self.process_tree)
-        print ("Dead CHIDLS : ", self.dead_childs)
-        print (" ")
+        #print ("PROCESS TREE -- ", self.process_tree)
+        #print ("Dead CHIDLS : ", self.dead_childs)
+        #print (" ")
 
         '''
          
