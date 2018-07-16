@@ -164,8 +164,6 @@ class CumulativeVarMonitor(VarMonitor):
         else:
             self.var_value_dict[cur_pid] = cur_val
 
-        if some_process.status == 'terminated':
-            cur_val= 0
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
 
@@ -294,6 +292,7 @@ class ProcessTreeMonitor():
         child_list = []
         temp_dead_childs = []
         self.dead_childs = {}
+        old_process_tree = self.process_tree.copy
         self.process_tree = {}
 
         for c in self.parent_proc.children():
@@ -307,7 +306,9 @@ class ProcessTreeMonitor():
         if temp_dead_childs:
             self.dead_childs[self.parent_proc] = temp_dead_childs
 
-        l_act = self.process_tree.copy()
+
+        miau = old_process_tree.copy()
+        l_act = old_process_tree.popitem()
 
         while (l_act):
             nodes = l_act.popitem()
