@@ -327,6 +327,7 @@ class ProcessTreeMonitor():
                             if child.status() == 'terminated':
                                 print ("RIP")
                                 temp_dead_childs.append(child)
+                            print ("STAT : ", child.status())
                         if child_list:
                             l_act[n] = child_list
                             self.process_tree[n] = child_list
