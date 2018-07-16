@@ -138,8 +138,8 @@ class CumulativeVarMonitor(VarMonitor):
         # it's reasonable to assume that the default aggregator is the sum
         self.var_value = sum(self.var_value_dict.values())
 
-        for key,val in self.var_value_dict.items():
-            print("KEY : ", key, "value : ", val)
+        #for key,val in self.var_value_dict.items():
+        #    print("KEY : ", key, "value : ", val)
         #self.var_value_dict = {}
 
     def update_value(self, some_process):
@@ -149,7 +149,7 @@ class CumulativeVarMonitor(VarMonitor):
         cur_pid = some_process.pid
         resta = 0
 
-        print ("SOME PROCESS : ", some_process)
+        #print ("SOME PROCESS : ", some_process)
 
         #if d_childs :
         #    print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
