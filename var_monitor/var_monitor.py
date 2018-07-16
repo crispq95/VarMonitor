@@ -147,8 +147,8 @@ class CumulativeVarMonitor(VarMonitor):
         resta = 0
 
 
-        if d_childs :
-            print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
+        #if d_childs :
+        #    print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
 
         if d_childs:
             for c in d_childs:
@@ -329,15 +329,15 @@ class ProcessTreeMonitor():
                     else:
                         self.dead_childs[nodes[0]] = [n]
 
-        print ("DEAD CHILDS ------- : ", self.dead_childs)
+        #print ("DEAD CHILDS ------- : ", self.dead_childs)
 
-        '''
+
 
         print ("PROCESS TREE -- ", self.process_tree)
         print ("Dead CHIDLS : ", self.dead_childs)
         print (" ")
 
-
+        '''
          
 
             actual_child = childs.pop()
