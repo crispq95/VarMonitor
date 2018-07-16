@@ -161,7 +161,7 @@ class CumulativeVarMonitor(VarMonitor):
                     pass
                     #resta += self.var_value_dict[c.pid]
                     #self.var_value_dict.pop(c.pid)
-            print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
+            #print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
             self.reset_dead_childs(some_process)
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
