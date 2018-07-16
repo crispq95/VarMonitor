@@ -164,7 +164,7 @@ class CumulativeVarMonitor(VarMonitor):
         else:
             self.var_value_dict[cur_pid] = cur_val
 
-        if some_process.status = 'terminated':
+        if some_process.status == 'terminated':
             cur_val= 0
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
