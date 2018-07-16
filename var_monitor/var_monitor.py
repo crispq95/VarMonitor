@@ -138,7 +138,7 @@ class CumulativeVarMonitor(VarMonitor):
         # it's reasonable to assume that the default aggregator is the sum
         self.var_value = sum(self.var_value_dict.values())
 
-        for key,val in var_value_dict.items():
+        for key,val in self.var_value_dict.items():
             print("KEY : ", key, "value : ", val)
         #self.var_value_dict = {}
 
