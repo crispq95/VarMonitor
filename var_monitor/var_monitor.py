@@ -424,7 +424,8 @@ class ProcessTreeMonitor():
         children_process_list = self.parent_proc.children(recursive=True)
         for children_process in children_process_list:
             try:
-                self.update_values(children_process)
+                if children_process.is_running():
+                    self.update_values(children_process)
             except:
                 pass
 
