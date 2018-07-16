@@ -331,12 +331,12 @@ class ProcessTreeMonitor():
                         self.process_tree[n] = []
 
 
-
-        print ("PROCESS TREE -- ", self.process_tree)
-        print (" ")
-        print ("OLD PROC TREE -- ", old_process_tree)
-        print ("")
-        print ("")
+        if old_process_tree != self.process_tree:
+            print ("PROCESS TREE -- ", self.process_tree)
+            print (" ")
+            print ("OLD PROC TREE -- ", old_process_tree)
+            print ("")
+            print ("")
 
         #print ("------- DEAD CHILDS ------- : ", self.dead_childs)
 
