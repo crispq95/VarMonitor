@@ -318,22 +318,27 @@ class ProcessTreeMonitor():
             nodes = l_act.popitem()
             for n in nodes[1]:
                 child_list = []
-                temp_dead_childs = []
                 if n.is_running():
                     if n.children():
                         for child in n.children():
                             if child.is_running():
                                 child_list.append(child)
-                            if child.status()=='terminated':
-                                print ("RIP")
-                                temp_dead_childs.append(child)
                         if child_list:
                             l_act[n] = child_list
                             self.process_tree[n] = child_list
-                        if temp_dead_childs:
-                            self.dead_childs[n] = temp_dead_childs
                     else:
                         self.process_tree[n] = []
+
+        for parent,children in old_process_tree.items():
+            temp_dead_childs = []
+
+            for child in children :
+                if not child.is_running():
+                    print ("RIP ", child)
+                    temp_dead_childs.append(child)
+
+            self.dead_childs[parent] = temp_dead_childs
+
 
 
         if old_process_tree != self.process_tree:
