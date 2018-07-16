@@ -323,7 +323,12 @@ class ProcessTreeMonitor():
                     else:
                         self.dead_childs[nodes[0]] = [n]
 
-        print ("Dead_CHIDLS : ", self.dead_childs)
+
+
+        print ("PROCESS TREE -- ", self.process_tree)
+        print ("Dead CHIDLS : ", self.dead_childs)
+        print (" ")
+
 
         ''' 
 
