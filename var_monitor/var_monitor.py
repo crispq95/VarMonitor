@@ -171,7 +171,9 @@ class CumulativeVarMonitor(VarMonitor):
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
 
-        self.set_value_from_value_dict()
+
+        if self.is_parent(some_process):
+            self.set_value_from_value_dict()
 
     def update_report_value(self):
         self.report_value = self.var_value
