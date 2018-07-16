@@ -146,17 +146,18 @@ class CumulativeVarMonitor(VarMonitor):
         cur_pid = some_process.pid
         resta = 0
 
-        if d_childs:
-            for c in d_childs:
-                if c.pid in self.var_value_dict:
-                    resta += self.var_value_dict[c.pid]
-                    #self.var_value_dict.pop(c.pid)
-            self.reset_dead_childs(some_process)
-
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             self.var_value_dict[cur_pid] += cur_val
         else:
             self.var_value_dict[cur_pid] = cur_val
+
+        if d_childs:
+            for c in d_childs:
+                if c.pid in self.var_value_dict:
+                    resta += self.var_value_dict[c.pid]
+                    self.var_value_dict.pop(c.pid)
+            self.reset_dead_childs(some_process)
+
 
         if resta != 0:
             self.var_value_dict[cur_pid] -= resta
