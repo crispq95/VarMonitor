@@ -303,7 +303,6 @@ class ProcessTreeMonitor():
 
         while (l_act):
             nodes = l_act.popitem()
-            print ("NODES : ",nodes)
             for n in nodes[1]:
                 if n.is_running():
                     if n.children():
@@ -318,10 +317,10 @@ class ProcessTreeMonitor():
                         if temp_dead_childs:
                             self.dead_childs[n] = temp_dead_childs
                 else:
-                    if key in self.dead_childs:
-                        self.dead_childs[key].append(n)
+                    if n[0] in self.dead_childs:
+                        self.dead_childs[n[0]].append(n)
                     else:
-                        self.dead_childs[key] = [n]
+                        self.dead_childs[n[0]] = [n]
 
 
 
