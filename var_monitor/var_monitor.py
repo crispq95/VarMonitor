@@ -36,7 +36,7 @@ def convert_size(size_bytes):
     p = math.pow(1024, i)
     s = round(size_bytes / p, 2)
 
-    print ("CONVERT BYTES (",size_bytes,") output -> ", '%s%s' % (s, size_name[i]))
+    print ("CONVERT BYTES (",size_bytes,") output -> ", '%s%s' % (s, size_name[i]), "type = ",type('%s%s' % (s, size_name[i])))
     return '%s%s' % (s, size_name[i])
 
 
