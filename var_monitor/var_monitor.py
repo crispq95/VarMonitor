@@ -263,7 +263,7 @@ class CumulativeVarMonitor2(VarMonitor):
         self.summary_value = self.var_value
 
 
-class TotalIOReadMonitor(CumulativeVarMonitor1, MemoryVarMonitor):
+class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().read_chars
 
