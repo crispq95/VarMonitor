@@ -143,6 +143,7 @@ class CumulativeVarMonitor(VarMonitor):
         #    print("KEY : ", key, "value : ", val)
         #self.var_value_dict = {}
 
+    '''
     def update_value(self, some_process):
         d_childs = self.get_dead_childs(some_process)
 
@@ -161,13 +162,30 @@ class CumulativeVarMonitor(VarMonitor):
         #
         #
         # if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
-        #self.var_value_dict[cur_pid] = cur_val - resta
-        self.var_value_dict[cur_pid] = cur_val
-
+        self.var_value_dict[cur_pid] = cur_val - resta
+        
         #print ("(",self.resta,")  ANTES : ", self.var_value)
         #print ("(",resta, ")  ANTES : ", self.var_value)
         self.set_value_from_value_dict()
         #print ("DESPUES : ", self.var_value)
+    '''
+
+    def update_value(self, some_process):
+        cur_val = self.get_process_value(some_process)
+        cur_pid = some_process.pid
+
+        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
+            # if the current value is lower than the already existent, it means
+            # that the pid has been reused
+            # move the old value to a backup
+            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
+            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
+            self.backup_count += 1
+
+        self.var_value_dict[cur_pid] = cur_val
+
+
+        self.set_value_from_value_dict()
 
     def update_report_value(self):
         self.report_value = self.var_value
