@@ -300,7 +300,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor2, MemoryVarMonitor):
         self.set_value_from_value_dict()
 
 
-class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
+class TotalMemSwapMonitor(CumulativeVarMonitor1, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.memory_full_info().swap
 
