@@ -150,11 +150,6 @@ class CumulativeVarMonitor(VarMonitor):
         cur_pid = some_process.pid
         resta = 0
 
-        #print ("SOME PROCESS : ", some_process)
-
-        #if d_childs :
-        #    print ("DEAD CHILDS (",some_process.pid,") : ", d_childs)
-
 
         if d_childs:
             for c in d_childs:
@@ -169,9 +164,9 @@ class CumulativeVarMonitor(VarMonitor):
         self.var_value_dict[cur_pid] = cur_val - resta
 
         #print ("(",self.resta,")  ANTES : ", self.var_value)
-        #print ("(", self.resta, ")  ANTES : ", self.var_value)
+        print ("(",resta, ")  ANTES : ", self.var_value)
         self.set_value_from_value_dict()
-        #print ("DESPUES : ", self.var_value)
+        print ("DESPUES : ", self.var_value)
 
     def update_report_value(self):
         self.report_value = self.var_value
@@ -181,7 +176,8 @@ class CumulativeVarMonitor(VarMonitor):
 
 
 class TotalIOReadMonitor(CumulativeVarMonitor, MemoryVarMonitor):
-    def get_process_value(self, some_process): return some_process.io_counters().read_chars
+    def get_process_value(self, some_process):
+        return some_process.io_counters().read_chars
 
 
 class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
