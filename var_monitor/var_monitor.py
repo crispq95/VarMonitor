@@ -522,7 +522,6 @@ class ProcessTreeMonitor():
             all the funcions needed to work correctly with a frequency determined
             by CHECK_LAPSE. It updates all the report and summary values while the
             parent process is still alive and running.
-
         """
 
         self._log_file.write(self.get_headers())
