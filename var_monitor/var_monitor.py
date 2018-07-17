@@ -276,7 +276,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor2, MemoryVarMonitor):
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
         d_childs = self.get_dead_childs(some_process)
-resta = 0
+        resta = 0
 
         if d_childs:
             for c in d_childs:
