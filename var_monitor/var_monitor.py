@@ -203,6 +203,22 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
+    def update_value(self, some_process):
+        cur_val = self.get_process_value(some_process)
+        cur_pid = some_process.pid
+
+        if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
+            # if the current value is lower than the already existent, it means
+            # that the pid has been reused
+            # move the old value to a backup
+            bk_pid = '{}_{}'.format(cur_pid, self.backup_count)
+            self.var_value_dict[bk_pid] = self.var_value_dict[cur_pid]
+            self.backup_count += 1
+
+        self.var_value_dict[cur_pid] = cur_val
+
+        self.set_value_from_value_dict()
+
 
 class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
