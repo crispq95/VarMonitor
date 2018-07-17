@@ -181,7 +181,14 @@ class CumulativeVarMonitor(VarMonitor):
         self.summary_value = self.var_value
 
 
-class CumulativeVarMonitor2(CumulativeVarMonitor,VarMonitor):
+class IOCumulativeVarMonitor(CumulativeVarMonitor,VarMonitor):
+    def reset_values(self):
+        self.var_value = 0.0
+        self.var_value_dict = {}
+        self.report_value = 0.0
+        self.summary_value = 0.0
+        self.backup_count = 0
+
     def update_value(self, some_process):
         d_childs = self.get_dead_childs(some_process)
 
@@ -199,25 +206,15 @@ class CumulativeVarMonitor2(CumulativeVarMonitor,VarMonitor):
 
 
 
-class TotalIOReadMonitor(CumulativeVarMonitor2, MemoryVarMonitor):
-    def reset_values(self):
-        self.var_value = 0.0
-        self.var_value_dict = {}
-        self.report_value = 0.0
-        self.summary_value = 0.0
-        self.backup_count = 0
+class TotalIOReadMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
+
 
     def get_process_value(self, some_process):
         return some_process.io_counters().read_chars
 
 
-class TotalIOWriteMonitor(CumulativeVarMonitor2, MemoryVarMonitor):
-    def reset_values(self):
-        self.var_value = 0.0
-        self.var_value_dict = {}
-        self.report_value = 0.0
-        self.summary_value = 0.0
-        self.backup_count = 0
+class TotalIOWriteMonitor(IOCumulativeVarMonitor2, MemoryVarMonitor):
+
 
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
