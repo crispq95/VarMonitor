@@ -122,7 +122,7 @@ class MaxUSSMonitor(MaxRSSMonitor):
         else:
             self.var_value += some_process.memory_full_info().uss
 
-class CumulativeVarMonitor1(VarMonitor):
+class CumulativeVarMonitor(VarMonitor):
     def reset_values(self):
         self.var_value = 0.0
         self.var_value_dict = {}
@@ -300,7 +300,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor2, MemoryVarMonitor):
         self.set_value_from_value_dict()
 
 
-class TotalMemSwapMonitor(CumulativeVarMonitor1, MemoryVarMonitor):
+class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         return some_process.memory_full_info().swap
 
