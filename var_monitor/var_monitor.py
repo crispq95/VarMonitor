@@ -213,7 +213,7 @@ class TotalIOReadMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
         return some_process.io_counters().read_chars
 
 
-class TotalIOWriteMonitor(IOCumulativeVarMonitor2, MemoryVarMonitor):
+class TotalIOWriteMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
 
 
     def get_process_value(self, some_process):
