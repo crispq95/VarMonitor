@@ -264,11 +264,12 @@ class TotalIOWriteMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
         """ Returns the number of written bytes of a given process """
         return some_process.io_counters().write_chars
 
+"""
 class TotalMemSwapMonitor(CumulativeVarMonitor, MemoryVarMonitor):
     def get_process_value(self, some_process):
         """ Returns the amount of memory that has been swapped out to disk by a given process """
         return some_process.memory_full_info().swap
-
+"""
 
 class TotalCpuTimeMonitor(CumulativeVarMonitor, RawVarMonitor):
     def get_process_value(self, some_process):
