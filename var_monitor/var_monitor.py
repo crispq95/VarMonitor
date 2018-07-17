@@ -156,7 +156,6 @@ class CumulativeVarMonitor(VarMonitor):
             for c in d_childs:
                 if c.pid in self.var_value_dict:
                     resta += self.var_value_dict.pop(c.pid)
-            print("from ", some_process.pid ," -- dead childs ",d_childs," value : ",resta)
             self.reset_dead_childs(some_process)
 
         #
@@ -216,6 +215,8 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
             self.backup_count += 1
 
         self.var_value_dict[cur_pid] = cur_val
+        print ("READ VAL (",some_process.pid,") : ", self.var_value_dict[cur_pid])
+
 
         self.set_value_from_value_dict()
 
