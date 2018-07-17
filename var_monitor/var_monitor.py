@@ -206,6 +206,15 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
 
+        resta = 0
+
+        if d_childs:
+            for c in d_childs:
+                if c.pid in self.var_value_dict:
+                    resta += self.var_value_dict.pop(c.pid)
+                print ("FOR ("some_process.pid") resta = ", resta)
+            self.reset_dead_childs(some_process)
+
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
             # if the current value is lower than the already existent, it means
             # that the pid has been reused
@@ -215,7 +224,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
             self.backup_count += 1
 
         self.var_value_dict[cur_pid] = cur_val
-        print ("READ VAL (",some_process.pid,") : ", self.var_value_dict[cur_pid])
+        #print ("READ VAL (",some_process.pid,") : ", self.var_value_dict[cur_pid])
 
 
         self.set_value_from_value_dict()
