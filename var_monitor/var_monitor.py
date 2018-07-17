@@ -18,12 +18,25 @@ REPORT_LAPSE = 1  # time between each usage print in seconds
 
 
 def convert_size(size_bytes):
+    """Converts bytes into the most appropiate format
+
+        Turns size_bytes into a more convenient format to be printed.
+      Args:
+          syze_bytes: bytes to be converted
+
+      Returns:
+
+
+
+      """
     if (size_bytes == 0):
         return '0B'
     size_name = ("B", "K", "M", "G", "T", "P", "E", "Z", "Y")
     i = int(math.floor(math.log(size_bytes, 1024)))
     p = math.pow(1024, i)
     s = round(size_bytes / p, 2)
+
+    print ("CONVERT BYTES (",size_bytes,") output -> ", '%s%s' % (s, size_name[i]))
     return '%s%s' % (s, size_name[i])
 
 
@@ -207,15 +220,11 @@ class IOCumulativeVarMonitor(CumulativeVarMonitor,VarMonitor):
 
 
 class TotalIOReadMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
-
-
     def get_process_value(self, some_process):
         return some_process.io_counters().read_chars
 
 
 class TotalIOWriteMonitor(IOCumulativeVarMonitor, MemoryVarMonitor):
-
-
     def get_process_value(self, some_process):
         return some_process.io_counters().write_chars
 
