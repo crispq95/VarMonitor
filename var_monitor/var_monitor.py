@@ -212,7 +212,7 @@ class TotalIOWriteMonitor(CumulativeVarMonitor, MemoryVarMonitor):
             for c in d_childs:
                 if c.pid in self.var_value_dict:
                     resta += self.var_value_dict.pop(c.pid)
-                print ("FOR ("some_process.pid") resta = ", resta)
+                print ("FOR (",some_process.pid,") resta = ", resta)
             self.reset_dead_childs(some_process)
 
         if cur_pid in self.var_value_dict and cur_val < self.var_value_dict[cur_pid]:
