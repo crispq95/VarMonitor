@@ -143,7 +143,7 @@ class CumulativeVarMonitor(VarMonitor):
         #    print("KEY : ", key, "value : ", val)
         #self.var_value_dict = {}
 
-    '''
+
     def update_value(self, some_process):
         d_childs = self.get_dead_childs(some_process)
 
@@ -168,8 +168,8 @@ class CumulativeVarMonitor(VarMonitor):
         #print ("(",resta, ")  ANTES : ", self.var_value)
         self.set_value_from_value_dict()
         #print ("DESPUES : ", self.var_value)
-    '''
 
+    '''
     def update_value(self, some_process):
         cur_val = self.get_process_value(some_process)
         cur_pid = some_process.pid
@@ -186,7 +186,7 @@ class CumulativeVarMonitor(VarMonitor):
 
 
         self.set_value_from_value_dict()
-
+    '''
     def update_report_value(self):
         self.report_value = self.var_value
 
