@@ -14,14 +14,21 @@ import uuid
 
 from var_monitor import ProcessTreeMonitor
 
+CONFIG_PATH = '/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/conf/run_and_monitorize.cfg'
 CHECK_LAPSE = 0  # time between each usage check in seconds
 REPORT_LAPSE = 1  # time between each usage print in seconds
 HS06_REF = 12.2  # reference to compute the HS06
 VAR_LIST = ['max_vms', 'max_rss', 'total_io_read', 'total_io_write',
-            'total_cpu_time', 'total_HS06', 'total_mem_swap','max_uss']
+            'total_cpu_time', 'total_HS06', 'total_mem_swap', 'max_uss']
 
 
 def parse_cmd_args(args_list):
+    """ Parses arguments passed at command line when the script was called.
+        It works for the arguments passed inside the -c option of the script
+
+        Return is in the same format as the one for parse_main_args()
+
+    """
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--logdir', required=False, default='.')
@@ -35,8 +42,14 @@ def parse_main_args():
 
         Returns
         -------
-        args :
-            FORMAT --
+        args : argparse.Namespace
+            Stores the data passed on command line as args.'data'
+
+            example :
+                args.command = COMMAND_TO_BE_EXECUTED_AND_MONITORIZED
+                args.pid = PID_NUM_TO_MONITOR
+                etc.
+
     """
     parser = argparse.ArgumentParser(description="CLI utility for running and monitoring processes.")
 
@@ -46,8 +59,6 @@ def parse_main_args():
     parser.add_argument("--logdir", "-ld", required=False, help="Log directory")
 
     args = parser.parse_args()
-
-    print ("PARSE_MAIN_ARGS : ", args, type(args))
     return args
 
 
@@ -59,60 +70,57 @@ ARGS_FUNC_DICT = {
 
 def modify_args(elem):
     """
+        Transforms a tuple into a key and value ready to be stored into a dictionary
 
         Parameters
         ----------
-        elem : dict
+        elem : tuple
+            ('elem1', 'val1,val2,..,valN')
 
         Returns
         -------
-        k : float
+        k : elem1
 
-        v : float
+        v : [val1,val2,..,valN]
+        list of tuple values
     """
-
     k, v = elem
 
     new_v = ARGS_FUNC_DICT[k](v)
-    print ("MODIFY_ARGS : ", elem, k, new_v )
     return k, new_v
 
 
 def main():
-    print("Empezamos !!")
     args = parse_main_args()
 
-    # Load configuration
+    # Load configuration file
+    # Config file passed by command line got priority over the default one (CONFIG_PATH).
     if args.conf:
         conf_file = args.conf
     else:
-        # conf_file = r'/etc/run_and_monitorize/run_and_monitorize.cfg'
-        conf_file = '/nfs/pic.es/user/c/cperalta/python_envs/python_3.5.1/codigoGit/conf/run_and_monitorize.cfg'
+        conf_file = CONFIG_PATH
     config = ConfigParser.ConfigParser()
 
     config.read(conf_file)
 
-    # Configure logging
-    # Get logging directory
-    if args.logdir:  # logdir = parametro
+    # Find log dir
+    # priotity = (command,config_file,default)
+    if args.logdir:  # passed at command line
         logdir = args.logdir
         config['logging']['logdir_implicit'] = '1'
 
-    elif config.has_option('logging', 'logdir'):  # si esta en fichero de configuracion
+    elif config.has_option('logging', 'logdir'):  # present on configuration file
         logdir = config.get('logging', 'logdir')
         print("Logfile on config : ", logdir)
-    else:  # por defecto = directorio actual
+    else:  # default
         logdir = '.'
         print ("Default logdir : ", logdir)
 
+    # Choose log file (name)
     if config.has_option('logging', 'logfile'):
-        print ("Config got logg address :")
         logfile = config.get('logging', 'logfile')
     else:
         logfile = 'usage_{}.csv'.format(uuid.uuid1().hex)
-        print ("Default log name : ", logfile)
-
-    print("Log file seleccionada : ", logfile)
 
     # Get the process to be monitorized
     if args.pid and args.command:
@@ -147,12 +155,9 @@ def main():
 
     if 'total_HS06' in monit_kwargs['var_list']:
         monit_kwargs['HS06_factor_func'] = config.get('HS06', 'HS06_factor_func')
-        print ("______________HAY HS06 : ", monit_kwargs['HS06_factor_func'])
     else:
-        print("NO HAY HS06_______________________")
-    monit_kwargs['log_file'] = whole_logfile
+        monit_kwargs['log_file'] = whole_logfile
 
-    print("Creating monitor var...")
     monitor = ProcessTreeMonitor(proc, **monit_kwargs)
 
     print(" ")
