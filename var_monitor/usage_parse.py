@@ -18,9 +18,29 @@ logger = logging.getLogger(__file__)
 
 conversion_dict = {'K': -2, 'M': -1, 'G': 0}
 def conversion(x):
+    """ Converts a given number (x) into a more readable format """
     return x[-1] in conversion_dict and float(x[:-1])*1024.**conversion_dict[x[-1]] or 0.0
 
 def save_or_show(fig, save_plot=False, plot_file=None):
+    """ Saves or shows a plot.
+
+        Parameters
+        ----------
+        fig : IDK________________________________________________
+            plot to be saved or shown.
+        save_plot : bool
+                - True : Plot is saved into a .pdf file.
+                - False : Plot is shown but not saved
+        plot_file : ________________________________________________
+            Name of the file where the plot will be saved.
+
+        Raise
+        -----
+
+
+    """
+
+    print ("SAVE PLOT : ", type(fig))
     if save_plot:
         if plot_file is None:
             raise Exception('File not informed')
@@ -30,7 +50,15 @@ def save_or_show(fig, save_plot=False, plot_file=None):
         plt.show()
 
 def compute_df_columns(df):
+    """ Saves or shows a plot.
 
+        Parameters
+        ----------
+        df : IDK________________________________________________
+            plot to be saved or shown.
+    """
+
+    print ("COMPUTE DF COLUMNS : ", df, type(df))
     if len(df['timestamp']) == 0:
         return None
 
@@ -60,26 +88,33 @@ def compute_df_columns(df):
     return df
 
 def get_min_2n(some_number):
-    '''
-    find the minimum power of two greater than some_number
-    '''
-
+    '''  find the minimum power of two greater than a given number '''
     return np.power(2., np.ceil(np.log2(some_number)))
 
+
+#List of variables to be plotted
 VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
 
 class UsageParser():
 
     def __init__(self):
-
         self.log_files = None
         self.dfs = None
         self.additional_stats = None
 
 
     def load_log_files(self, wildcard_list, max_len=None):
+        """ Loads log files that will be used for plotting.
 
+            Parameters
+            ----------
+            wildcard_list : IDK________________________________________________
+                path and name of the files to be used
+            max_len :
+                Maximum number of log files that will be used.
+
+        """
         log_files = []
 
         for wildcard in wildcard_list:
@@ -97,7 +132,7 @@ class UsageParser():
         self.load_dfs()
 
     def load_dfs(self):
-
+        """ Creates a list of  """
         dfs = []
         for log_file in self.log_files:
             df = pd.read_csv(log_file, engine='python')
