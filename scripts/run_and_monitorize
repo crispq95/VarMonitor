@@ -22,6 +22,7 @@ VAR_LIST = ['max_vms', 'max_rss', 'total_io_read', 'total_io_write',
 
 
 def parse_cmd_args(args_list):
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--logdir', required=False, default='.')
     parser.add_argument('--workdir', required=False, default='.')
@@ -30,6 +31,13 @@ def parse_cmd_args(args_list):
 
 
 def parse_main_args():
+    """ Parses arguments passed at command line when the script was called.
+
+        Returns
+        -------
+        args :
+            FORMAT --
+    """
     parser = argparse.ArgumentParser(description="CLI utility for running and monitoring processes.")
 
     parser.add_argument("--command", "-c", required=False, help="Command to be run and monitorized")
@@ -38,6 +46,8 @@ def parse_main_args():
     parser.add_argument("--logdir", "-ld", required=False, help="Log directory")
 
     args = parser.parse_args()
+
+    print ("PARSE_MAIN_ARGS : ", args, type(args))
     return args
 
 
@@ -48,9 +58,23 @@ ARGS_FUNC_DICT = {
 
 
 def modify_args(elem):
+    """
+
+        Parameters
+        ----------
+        elem : dict
+
+        Returns
+        -------
+        k : float
+
+        v : float
+    """
+
     k, v = elem
 
     new_v = ARGS_FUNC_DICT[k](v)
+    print ("MODIFY_ARGS : ", elem, k, new_v )
     return k, new_v
 
 

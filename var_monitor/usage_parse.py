@@ -50,7 +50,8 @@ def save_or_show(fig, save_plot=False, plot_file=None):
         plt.show()
 
 def compute_df_columns(df):
-    """ Saves or shows a plot.
+    """ Creates the columns for a given log file storing the data
+        in a convenient format
 
         Parameters
         ----------
@@ -132,7 +133,13 @@ class UsageParser():
         self.load_dfs()
 
     def load_dfs(self):
-        """ Creates a list of  """
+        """ Reads log files and creates dfs list containing every log file
+            with data stored in a proper format, ready to be plotted.
+
+            example :
+                dfs = [ ] FORMATO !
+
+        """
         dfs = []
         for log_file in self.log_files:
             df = pd.read_csv(log_file, engine='python')
@@ -140,6 +147,8 @@ class UsageParser():
             dfs.append(df)
 
         self.dfs = dfs
+
+        print ("LOAD_DFS ", self.dfs, type(self.dfs))
 
 
 
