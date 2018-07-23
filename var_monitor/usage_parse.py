@@ -149,7 +149,7 @@ class UsageParser():
         time_files = []
 
 
-        print ("HOLA ! FUNCIONA PLS ; - ; ")
+        print ("HOLA ! FUNCIONA PLS ___(; - ;)___ ")
         log_files = []
 
 
