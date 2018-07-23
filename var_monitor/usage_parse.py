@@ -141,7 +141,6 @@ class UsageParser():
         self.log_files = log_files
 
         for f in t_fil :
-            #self.time_files.append(load_time_files(f))
             print(load_time_files(f))
         self.load_dfs()
 
