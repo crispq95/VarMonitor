@@ -17,6 +17,7 @@ import matplotlib.lines as mlines
 import marshal
 import tempfile
 import io
+import pstats
 
 logger = logging.getLogger(__file__)
 
@@ -52,6 +53,8 @@ def save_or_show(fig, save_plot=False, plot_file=None):
         fig.savefig(plot_file)
     else:
         plt.show()
+
+
 
 def compute_df_columns(df):
     """ Creates the columns for a given log file storing the data
@@ -96,10 +99,30 @@ def get_min_2n(some_number):
     '''  find the minimum power of two greater than a given number '''
     return np.power(2., np.ceil(np.log2(some_number)))
 
+def order_by(attr,stats_list):
+	for i in range(1,len(stats_list)):
+		for j in range(0, len(stats_list)-i):
+			if(stats_list[j].var_dict[attr] < stats_list[j+1].var_dict[attr]):
+				k = stats_list[j+1]
+				stats_list[j+1] = stats_list[j]
+				stats_list[j] = k
+
+	return stats_list
 
 #List of variables to be plotted
 VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
+
+
+ATTR_LIST = ['num_calls','nonrec_calls','tottime','cumtime']
+
+class Stat:
+	def __init__(self, key, data):
+		self.funct_name = key
+		self.var_dict = {}
+		for i in range(len(ATTR_LIST)):
+			self.var_dict[ATTR_LIST[i]] = data[i]
+
 
 class UsageParser():
 
