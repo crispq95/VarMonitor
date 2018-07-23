@@ -148,6 +148,8 @@ class UsageParser():
         """
         time_files = []
 
+
+        print ("HOLA ! FUNCIONA PLS ; - ; ")
         log_files = []
 
 
