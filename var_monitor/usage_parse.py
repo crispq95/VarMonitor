@@ -145,7 +145,7 @@ class UsageParser():
             print(self.load_time_files(f))
         self.load_dfs()
 
-    def load_time_files(data_file):
+    def load_time_files(self, data_file):
         statsfile = tempfile.NamedTemporaryFile()
 
         s = open(data_file, 'r+b')
@@ -155,6 +155,9 @@ class UsageParser():
         rep_list = ['tottime', 'cumtime']
 
         p2 = pstats.Stats(statsfile.name)
+        stats = marshal.load(statsfile.file)
+        stats_list = []
+
         for k in stats:
             stats_list.append(Stat(k, stats[k]))
 
