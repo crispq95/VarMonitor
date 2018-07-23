@@ -108,7 +108,7 @@ class UsageParser():
         self.dfs = None
         self.additional_stats = None
 
-        self.time_files = None
+        self.time_files = []
 
     def load_log_files(self, wildcard_list, t_fil, max_len=None):
         """ Loads log files that will be used for plotting.
