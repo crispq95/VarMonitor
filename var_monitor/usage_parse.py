@@ -14,6 +14,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
+import marshal
+import tempfile
+import io
+
 logger = logging.getLogger(__file__)
 
 conversion_dict = {'K': -2, 'M': -1, 'G': 0}
@@ -104,8 +108,9 @@ class UsageParser():
         self.dfs = None
         self.additional_stats = None
 
+        self.time_files = None
 
-    def load_log_files(self, wildcard_list, max_len=None):
+    def load_log_files(self, wildcard_list, t_fil, max_len=None):
         """ Loads log files that will be used for plotting.
 
             Parameters
@@ -116,21 +121,64 @@ class UsageParser():
                 Maximum number of log files that will be used.
 
         """
+        time_files = []
+
         log_files = []
+
 
         for wildcard in wildcard_list:
             #log_files += glob.glob(wildcard)
             log_files.append(wildcard)
 
-
+        for f in t_fil:
+            time_files.append(time_files)
 
         # When maximum length is fixed, get the first max_len files
         if not max_len is None:
             log_files = log_files[:max_len]
+            time_files = time_files[:max_len]
 
         self.log_files = log_files
 
+        for f in t_fil :
+            self.time_files.append(load_time_files(f))
+
         self.load_dfs()
+
+    def load_time_files(data_file):
+        statsfile = tempfile.NamedTemporaryFile()
+
+        s = open(data_file, 'r+b')
+        statsfile.file = s
+        statsfile.name = data_file
+
+        rep_list = ['tottime', 'cumtime']
+
+        p2 = pstats.Stats(statsfile.name)
+        for k in stats:
+            stats_list.append(Stat(k, stats[k]))
+
+        ordered_stats = {}
+
+        # se tiene que ordenar para cada atributo que se pasa :
+        for var in rep_list:
+            ordered_stats[var] = order_by(var, stats_list.copy())
+
+        group_names = {}
+        group_data = {}
+
+        for key in ordered_stats:
+            for i in range(10):
+                if key not in group_names:
+                    # print (key, " no existe en la iteracion : ", i, " -- ", ordered_stats['tottime'][0].var_dict['tottime'])
+                    group_names[key] = [str(ordered_stats[key][i].funct_name)]
+                    group_data[key] = [ordered_stats[key][i].var_dict[key]]
+                else:
+                    # print (key, " EXISTE en la iteracion : ", i)
+                    group_names[key].insert(0, str(ordered_stats[key][i].funct_name))
+                    group_data[key].insert(0, ordered_stats[key][i].var_dict[key])
+
+        return ordered_stats
 
     def load_dfs(self):
         """ Reads log files and creates dfs list containing every log file
