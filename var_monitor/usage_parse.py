@@ -132,6 +132,8 @@ class UsageParser():
         self.additional_stats = None
 
         self.time_files = []
+        self.group_data = {}
+        self.group_names = {}
 
     def load_log_files(self, wildcard_list, t_fil, max_len=None):
         """ Loads log files that will be used for plotting.
@@ -163,9 +165,7 @@ class UsageParser():
 
         self.log_files = log_files
 
-        for f in t_fil :
-            #self.time_files.append(load_time_files(f))
-            print(self.load_time_files(f))
+        self.time_files = self.load_time_files(f)
         self.load_dfs()
 
     def load_time_files(self, data_file):
@@ -203,6 +203,8 @@ class UsageParser():
                     # print (key, " EXISTE en la iteracion : ", i)
                     group_names[key].insert(0, str(ordered_stats[key][i].funct_name))
                     group_data[key].insert(0, ordered_stats[key][i].var_dict[key])
+
+
 
         return ordered_stats
 
@@ -350,5 +352,18 @@ class UsageParser():
             ax.set_xlim([0., 1.])
 
         save_or_show(fig, save_plot, plot_file)
+
+    def plot_time(self):
+        print (" ")
+        print (" ")
+        for key in self.time_files:
+            for k in range(10):
+                print(k, " ) ", self.group_data[key][k])
+
+            print(key)
+            fig, ax = plt.subplots()
+            ax.set_xlabel(key)
+            ax.barh(self.group_names[key], self.group_data[key])
+            plt.show()
         
         
