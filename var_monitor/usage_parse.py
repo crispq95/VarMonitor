@@ -225,7 +225,7 @@ class UsageParser():
 
         self.dfs = dfs
 
-        print ("LOAD_DFS ", self.dfs, type(self.dfs))
+        #print ("LOAD_DFS ", self.dfs, type(self.dfs))
 
 
 
@@ -359,6 +359,7 @@ class UsageParser():
         print (" ")
 
         print ("- ^ - :\n")
+        print self.time_files
         for key in self.time_files:
 
             print(key)
