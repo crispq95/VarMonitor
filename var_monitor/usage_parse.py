@@ -156,7 +156,7 @@ class UsageParser():
             log_files.append(wildcard)
 
         for f in t_fil:
-            time_files.append(time_files)
+            time_files = self.load_time_files(f)
 
         # When maximum length is fixed, get the first max_len files
         if not max_len is None:
@@ -165,7 +165,7 @@ class UsageParser():
 
         self.log_files = log_files
 
-        self.time_files = self.load_time_files(f)
+        #self.time_files = self.load_time_files(f)
         self.load_dfs()
 
     def load_time_files(self,data_file):
