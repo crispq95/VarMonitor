@@ -359,7 +359,7 @@ class UsageParser():
         print (" ")
 
         print ("- ^ - :\n")
-        print self.time_files
+        print (self.time_files)
         for key in self.time_files:
 
             print(key)
