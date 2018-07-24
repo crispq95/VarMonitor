@@ -382,6 +382,7 @@ class UsageParser():
         n_vars = len(var_list)
         fig = plt.figure(figsize=(8, 8 * n_vars))
 
+        print (":(")
         for file in self.time_files:
             for key in file :
                 ax = fig.add_subplot(n_vars, sample_size, ax_ind)
