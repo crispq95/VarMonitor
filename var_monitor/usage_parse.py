@@ -235,6 +235,9 @@ class UsageParser():
         MARGIN = 0.05
 
         sample_dfs = random.sample(self.dfs, sample_size)
+
+
+        print (sample_dfs)
         n_vars = len(var_list)
 
         fig = plt.figure(figsize=(8*sample_size, 8*n_vars))
@@ -356,16 +359,10 @@ class UsageParser():
         save_or_show(fig, save_plot, plot_file)
 
     def plot_time(self):
-        print (" ")
-        print (" ")
-
-        print ("- ^ - :\n")
-        print (self.time_files)
 
         for file in self.time_files:
             for key in file:
 
-                print(key)
                 fig, ax = plt.subplots()
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
