@@ -179,8 +179,6 @@ class UsageParser():
         """
 
         self.time_files = time_files
-
-        print ("TIME FILES : ", time_files)
         self.load_dfs()
 
     def load_time_files(self,data_file):
@@ -255,7 +253,6 @@ class UsageParser():
         sample_dfs = random.sample(self.dfs, sample_size)
 
 
-        print ("SAMPLE DFS : ", sample_dfs)
         n_vars = len(var_list)
 
         fig = plt.figure(figsize=(8*sample_size, 8*n_vars))
@@ -388,7 +385,7 @@ class UsageParser():
                 ax = fig.add_subplot(n_vars, sample_size, ax_ind)
 
                 #ax.set_xlabel(key)
-                ax.legend(self.group_names[key])
+                legend(self.group_names[key])
                 ax.barh(self.group_names[key], self.group_data[key])
                 ax_ind += 1
         save_or_show(fig)
