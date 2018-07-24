@@ -165,7 +165,17 @@ class UsageParser():
 
         self.log_files = log_files
 
-        self.time_files = time_files
+        dfs = []
+
+        for log_file in t_fil:
+            df = pd.read_csv(log_file, engine='python')
+            compute_df_columns(df)
+            dfs.append(df)
+
+        prueba = dfs
+        print ("PRUEBA : ", prueba )
+
+    self.time_files = time_files
         self.load_dfs()
 
     def load_time_files(self,data_file):
@@ -204,6 +214,7 @@ class UsageParser():
                     # print (key, " EXISTE en la iteracion : ", i)
                     group_names[key].insert(0, str(ordered_stats[key][i].funct_name))
                     group_data[key].insert(0, ordered_stats[key][i].var_dict[key])
+
 
         self.group_data = group_data
         self.group_names = group_names
