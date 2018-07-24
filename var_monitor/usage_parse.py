@@ -112,6 +112,8 @@ def order_by(attr,stats_list):
 VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
 
+TIME_LIST = ['tottime','cumtime']
+
 ATTR_LIST = ['num_calls','nonrec_calls','tottime','cumtime']
 
 class Stat:
@@ -374,10 +376,10 @@ class UsageParser():
 
         save_or_show(fig, save_plot, plot_file)
 
-    def plot_time(self, sample_size=2):
+    def plot_time(self, sample_size=2, var_list=TIME_LIST):
 
         ax_ind = 1
-        n_vars = 2
+        n_vars = len(var_list)
         fig = plt.figure(figsize=(8, 8 * n_vars))
 
         for file in self.time_files:
@@ -387,5 +389,4 @@ class UsageParser():
 
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
-            #plt.show()
         save_or_show(fig)
