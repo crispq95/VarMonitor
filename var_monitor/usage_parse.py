@@ -361,10 +361,12 @@ class UsageParser():
 
         print ("- ^ - :\n")
         print (self.time_files)
-        for key in self.time_files:
 
-            print(key)
-            fig, ax = plt.subplots()
-            ax.set_xlabel(key)
-            ax.barh(self.group_names[key], self.group_data[key])
-            plt.show()
+        for file in self.time_files:
+            for key in file:
+
+                print(key)
+                fig, ax = plt.subplots()
+                ax.set_xlabel(key)
+                ax.barh(self.group_names[key], self.group_data[key])
+                plt.show()
