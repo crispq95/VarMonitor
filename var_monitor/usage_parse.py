@@ -155,7 +155,9 @@ class UsageParser():
             #log_files += glob.glob(wildcard)
             log_files.append(wildcard)
 
+        print ("FILES : ")
         for f in t_fil:
+            print (f)
             time_files = self.load_time_files(f)
 
         # When maximum length is fixed, get the first max_len files
@@ -172,6 +174,9 @@ class UsageParser():
         statsfile = tempfile.NamedTemporaryFile()
 
         s = open(data_file, 'r+b')
+
+        if (s):
+            print ("OPEN FILE was fine ! ")
         statsfile.file = s
         statsfile.name = data_file
 
