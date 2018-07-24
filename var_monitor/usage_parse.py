@@ -387,13 +387,12 @@ class UsageParser():
 
                 for i, name in enumerate(self.group_names[key]):
                     ax.barh(name[-15:], self.group_data[key][i], label=name[0:45])
-                #	ax.plot(group_data[key][i],label=name)
 
                 legend = ax.legend()
                 frame = legend.get_frame()
                 frame.set_facecolor('0.90')
+                ax.set_xlabel(key)
 
-                #ax.set_yticklabels([])
                 handles, labels = ax.get_legend_handles_labels()
                 ax.legend(handles[::-1], labels[::-1], title='Line', loc="lower right")
 
