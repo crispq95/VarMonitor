@@ -377,10 +377,10 @@ class UsageParser():
     def plot_time(self, sample_size=2):
 
         ax_ind = 1
-        for file in self.time_files:
-            n_vars = len(file)
-            fig = plt.figure(figsize=(8, 8 * n_vars))
+        n_vars = 2
+        fig = plt.figure(figsize=(8, 8 * n_vars))
 
+        for file in self.time_files:
             for key in file :
                 ax = fig.add_subplot(n_vars, sample_size, ax_ind)
                 ax_ind += 1
