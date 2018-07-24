@@ -358,7 +358,7 @@ class UsageParser():
         print (" ")
         print (" ")
 
-        print ("o ^ o :\n")
+        print ("- ^ - :\n")
         for key in self.time_files:
 
             print(key)
