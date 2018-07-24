@@ -54,8 +54,6 @@ def save_or_show(fig, save_plot=False, plot_file=None):
     else:
         plt.show()
 
-
-
 def compute_df_columns(df):
     """ Creates the columns for a given log file storing the data
         in a convenient format
@@ -99,6 +97,7 @@ def get_min_2n(some_number):
     '''  find the minimum power of two greater than a given number '''
     return np.power(2., np.ceil(np.log2(some_number)))
 
+
 def order_by(attr,stats_list):
 	for i in range(1,len(stats_list)):
 		for j in range(0, len(stats_list)-i):
@@ -113,7 +112,6 @@ def order_by(attr,stats_list):
 VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
 
-
 ATTR_LIST = ['num_calls','nonrec_calls','tottime','cumtime']
 
 class Stat:
@@ -122,6 +120,8 @@ class Stat:
 		self.var_dict = {}
 		for i in range(len(ATTR_LIST)):
 			self.var_dict[ATTR_LIST[i]] = data[i]
+
+
 
 
 class UsageParser():
@@ -148,8 +148,6 @@ class UsageParser():
         """
         time_files = []
 
-
-        print ("HOLA ! FUNCIONA PLS ___(; - ;)___ ")
         log_files = []
 
 
@@ -157,7 +155,7 @@ class UsageParser():
             #log_files += glob.glob(wildcard)
             log_files.append(wildcard)
 
-        #for f in t_fil:
+        for f in t_fil:
             time_files.append(time_files)
 
         # When maximum length is fixed, get the first max_len files
@@ -170,7 +168,7 @@ class UsageParser():
         self.time_files = self.load_time_files(f)
         self.load_dfs()
 
-    def load_time_files(self, data_file):
+    def load_time_files(self,data_file):
         statsfile = tempfile.NamedTemporaryFile()
 
         s = open(data_file, 'r+b')
@@ -206,7 +204,8 @@ class UsageParser():
                     group_names[key].insert(0, str(ordered_stats[key][i].funct_name))
                     group_data[key].insert(0, ordered_stats[key][i].var_dict[key])
 
-
+        self.group_data = group_data
+        self.group_names = group_names
 
         return ordered_stats
 
@@ -274,16 +273,16 @@ class UsageParser():
         save_or_show(fig, save_plot, plot_file)
 
     def compute_additional_stats(self, var_list = VARLIST, n_bins=100):
-    
+
         additional_stats = {}
-        
+
         # compute mean duration
         durations = [df['time_spent_s'].iloc[-1] for df in self.dfs]
         additional_stats['mean_duration'] = np.mean(durations)
         additional_stats['mean_duration_str'] = timedelta(seconds = additional_stats['mean_duration']).__str__()
         additional_stats['max_duration'] = np.max(durations)
         additional_stats['max_duration_str'] = timedelta(seconds = additional_stats['max_duration']).__str__()
-    
+
         # compute rss histogram
         if 'max_rss_GB' in var_list:
             mean_rss_hist = np.zeros(n_bins)
@@ -300,42 +299,42 @@ class UsageParser():
                 rss_count += len(df['max_rss_GB'])
             additional_stats['rss_hist'] = mean_rss_hist/rss_count
             additional_stats['rss_hist_bins'] = hist_bins
-            
+
             # compute max RSS
             additional_stats['max_rss'] = max([df['max_rss_GB'].max() for df in self.dfs])
-        
+
         self.additional_stats = additional_stats
-    
-    
+
+
     def plot_additional_stats(self, save_plot=False, plot_file=None):
-        
+
         self.compute_additional_stats()
         hist_bins = self.additional_stats['rss_hist_bins']
-        
+
         hist_bins_centers = np.array((hist_bins[:-1] + hist_bins[1:])/2)
         fig = plt.figure(figsize=(16., 8.))
         ax = fig.add_subplot(1, 1, 1)
         ax.bar(hist_bins_centers, 100*self.additional_stats['rss_hist'], hist_bins_centers[1] - hist_bins_centers[0]);
         ax.set_ylabel('% of sample')
         ax.set_xlabel('GB RSS')
-        
+
         save_or_show(fig, save_plot, plot_file)
-    
+
     def plot_value_range(self, var_list=VARLIST, save_plot=False, plot_file=None):
-        
+
         n_vars = len(var_list)
-        
+
         fig = plt.figure(figsize=(8, 8*n_vars))
-        
+
         x = np.linspace(0, 1, 101)
         interp_dfs = {}
         for var_name in var_list:
             interp_dfs[var_name] = pd.DataFrame([], index=x)
-            
+
         for i_df, df in enumerate(self.dfs):
             for var_name in var_list:
                 interp_dfs[var_name][i_df] = np.interp(x, df['time_spent_rel'], df[var_name])
-        
+
         for i_df, (var_name, interp_df) in enumerate(interp_dfs.items()):
             interp_arr = interp_df.as_matrix()
             ax = fig.add_subplot(n_vars, 1, i_df + 1)
@@ -356,12 +355,14 @@ class UsageParser():
         save_or_show(fig, save_plot, plot_file)
 
     def plot_time(self):
-        print ("FUNCIONA ")
+        print (" ")
+        print (" ")
+
+        print ("o ^ o :\n")
         for key in self.time_files:
 
+            print(key)
             fig, ax = plt.subplots()
             ax.set_xlabel(key)
             ax.barh(self.group_names[key], self.group_data[key])
             plt.show()
-        
-        
