@@ -386,7 +386,7 @@ class UsageParser():
                 ax_ind += 1
 
                 for i, name in enumerate(self.group_names[key]):
-                    ax.barh(name[-15:], group_data[key][i], label=name[0:45])
+                    ax.barh(name[-15:], self.group_data[key][i], label=name[0:45])
                 #	ax.plot(group_data[key][i],label=name)
 
                 legend = ax.legend()
