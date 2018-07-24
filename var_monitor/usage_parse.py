@@ -382,4 +382,5 @@ class UsageParser():
                 fig, ax = plt.subplots()
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
-                plt.show()
+                #plt.show()
+                save_or_show(fig)
