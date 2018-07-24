@@ -393,7 +393,7 @@ class UsageParser():
                 frame = legend.get_frame()
                 frame.set_facecolor('0.90')
 
-                ax.set_yticklabels([])
+                #ax.set_yticklabels([])
                 handles, labels = ax.get_legend_handles_labels()
                 ax.legend(handles[::-1], labels[::-1], title='Line', loc="lower right")
 
