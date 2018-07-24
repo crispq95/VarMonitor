@@ -157,7 +157,7 @@ class UsageParser():
             #log_files += glob.glob(wildcard)
             log_files.append(wildcard)
 
-        for f in t_fil:
+        #for f in t_fil:
             time_files.append(time_files)
 
         # When maximum length is fixed, get the first max_len files
@@ -356,6 +356,7 @@ class UsageParser():
         save_or_show(fig, save_plot, plot_file)
 
     def plot_time(self):
+        print ("FUNCIONA ")
         for key in self.time_files:
 
             fig, ax = plt.subplots()
