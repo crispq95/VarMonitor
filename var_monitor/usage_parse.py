@@ -175,7 +175,7 @@ class UsageParser():
         prueba = dfs
         print ("PRUEBA : ", prueba )
 
-    self.time_files = time_files
+        self.time_files = time_files
         self.load_dfs()
 
     def load_time_files(self,data_file):
