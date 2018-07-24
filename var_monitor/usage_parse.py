@@ -219,11 +219,14 @@ class UsageParser():
 
         """
         dfs = []
+
+
         for log_file in self.log_files:
             df = pd.read_csv(log_file, engine='python')
             compute_df_columns(df)
             dfs.append(df)
 
+        print ("DFS -- ", dfs)
         self.dfs = dfs
 
         #print ("LOAD_DFS ", self.dfs, type(self.dfs))
