@@ -387,7 +387,7 @@ class UsageParser():
                 ax = fig.add_subplot(n_vars, sample_size, ax_ind)
 
                 ax.set_xlabel(key)
-                ax.legend(self.group_names)
+                ax.legend(self.group_names[key])
                 ax.barh(self.group_names[key], self.group_data[key])
                 ax_ind += 1
         save_or_show(fig)
