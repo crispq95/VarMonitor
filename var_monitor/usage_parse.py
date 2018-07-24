@@ -374,13 +374,19 @@ class UsageParser():
 
         save_or_show(fig, save_plot, plot_file)
 
-    def plot_time(self):
+    def plot_time(self, sample_size=1):
+
 
         for file in self.time_files:
-            for key in file:
+            n_vars = len(file)
+            fig = plt.figure(figsize=(8, 8 * n_vars))
 
-                fig, ax = plt.subplots()
+            for key in file:
+                ax = fig.add_subplot(n_vars, sample_size, ax_ind)
+                ax_ind += 1
+
+                #fig, ax = plt.subplots()
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
                 #plt.show()
-                save_or_show(fig)
+        save_or_show(fig)
