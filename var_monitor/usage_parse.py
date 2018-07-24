@@ -374,7 +374,7 @@ class UsageParser():
 
         save_or_show(fig, save_plot, plot_file)
 
-    def plot_time(self, sample_size=1):
+    def plot_time(self, sample_size=2):
 
         ax_ind = 1
         for file in self.time_files:
