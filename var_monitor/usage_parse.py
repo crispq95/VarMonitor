@@ -237,7 +237,7 @@ class UsageParser():
         sample_dfs = random.sample(self.dfs, sample_size)
 
 
-        print (sample_dfs)
+        print ("SAMPLE DFS : ", sample_dfs)
         n_vars = len(var_list)
 
         fig = plt.figure(figsize=(8*sample_size, 8*n_vars))
