@@ -164,7 +164,7 @@ class UsageParser():
             time_files = time_files[:max_len]
 
         self.log_files = log_files
-
+        """
         dfs = []
 
         for log_file in t_fil:
@@ -174,8 +174,11 @@ class UsageParser():
 
         prueba = dfs
         print ("PRUEBA : ", prueba )
+        """
 
         self.time_files = time_files
+
+        print ("TIME FILES : ", time_files)
         self.load_dfs()
 
     def load_time_files(self,data_file):
@@ -237,7 +240,6 @@ class UsageParser():
             compute_df_columns(df)
             dfs.append(df)
 
-        print ("DFS -- ", dfs)
         self.dfs = dfs
 
         #print ("LOAD_DFS ", self.dfs, type(self.dfs))
