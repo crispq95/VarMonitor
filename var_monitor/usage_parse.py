@@ -378,7 +378,7 @@ class UsageParser():
 
         ax_ind = 1
         for file in self.time_files:
-            n_vars = 2
+            n_vars = len(file)
             fig = plt.figure(figsize=(8, 8 * n_vars))
 
             for key in file :
