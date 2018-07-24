@@ -388,4 +388,4 @@ class UsageParser():
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
             #plt.show()
-            save_or_show(fig)
+        save_or_show(fig)
