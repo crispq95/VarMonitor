@@ -378,15 +378,14 @@ class UsageParser():
 
         ax_ind = 1
         for file in self.time_files:
-            n_vars = len(file)
-            fig = plt.figure(figsize=(8, 8 * 2))
+            n_vars = 2
+            fig = plt.figure(figsize=(8, 8 * n_vars))
 
-            for key in file:
-                ax = fig.add_subplot(2, sample_size, ax_ind)
+            for key in file :
+                ax = fig.add_subplot(n_vars, sample_size, ax_ind)
                 ax_ind += 1
 
-                #fig, ax = plt.subplots()
                 ax.set_xlabel(key)
                 ax.barh(self.group_names[key], self.group_data[key])
-                #plt.show()
+            plt.show()
         save_or_show(fig)
