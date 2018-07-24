@@ -379,13 +379,35 @@ class UsageParser():
         n_vars = len(var_list)
         fig = plt.figure(figsize=(8, 8 * n_vars))
 
+
+        for file in self.time_files:
+            for key in file :
+                ax = fig.add_subplot(n_vars, sample_size, ax_ind)
+                ax_ind += 1
+
+                for i, name in enumerate(self.group_names[key]):
+                    ax.barh(name, self.group_data[key][i], label=name[0:45])
+                #	ax.plot(group_data[key][i],label=name)
+
+                legend = ax.legend()
+                frame = legend.get_frame()
+                frame.set_facecolor('0.90')
+
+                handles, labels = ax.get_legend_handles_labels()
+                ax.legend(handles[::-1], labels[::-1], title='Line', loc="lower right")
+
+
+
+        """
         print (":(")
         for file in self.time_files:
             for key in file :
                 ax = fig.add_subplot(n_vars, sample_size, ax_ind)
 
                 #ax.set_xlabel(key)
-                legend(self.group_names[key])
+                legend(self.group_names[key], loc='lower_right')
                 ax.barh(self.group_names[key], self.group_data[key])
                 ax_ind += 1
+        """
         save_or_show(fig)
+
