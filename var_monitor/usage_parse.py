@@ -64,7 +64,7 @@ def compute_df_columns(df):
             plot to be saved or shown.
     """
 
-    print ("COMPUTE DF COLUMNS : ", df, type(df))
+    #print ("COMPUTE DF COLUMNS : ", df, type(df))
     if len(df['timestamp']) == 0:
         return None
 
@@ -167,7 +167,7 @@ class UsageParser():
 
         self.log_files = log_files
 
-        #self.time_files = self.load_time_files(f)
+        self.time_files = time_files
         self.load_dfs()
 
     def load_time_files(self,data_file):
