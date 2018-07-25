@@ -256,7 +256,7 @@ class UsageParser():
 
         n_vars = len(var_list)
 
-        fig = plt.figure(figsize=(8*sample_size, 8*n_vars))
+        fig = plt.figure(figsize=(8*n_vars, 8*sample_size))
 
         ax_ind = 1
         for var_name in var_list:
