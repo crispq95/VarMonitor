@@ -19,6 +19,8 @@ import tempfile
 import io
 import pstats
 
+from matplotlib.backends.backend_pdf import PdfPages
+
 logger = logging.getLogger(__file__)
 
 conversion_dict = {'K': -2, 'M': -1, 'G': 0}
@@ -50,7 +52,11 @@ def save_or_show(fig, save_plot=False, plot_file=None):
         if plot_file is None:
             raise Exception('File not informed')
 
-        fig.savefig(plot_file)
+        pp = PdfPages(plot_file)
+        plt.savefig(pp, format='pdf')
+        pp.savefig()
+        pp.close()
+        #fig.savefig(plot_file)
     else:
         plt.show()
 
