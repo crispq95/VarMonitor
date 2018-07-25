@@ -109,7 +109,7 @@ def order_by(attr,stats_list):
 	return stats_list
 
 #List of variables to be plotted
-VARLIST = ['max_vms_GB', 'max_rss_GB', 'max_uss_GB', 'total_io_read_GB', 'total_io_write_GB',
+VARLIST = ['max_vms_GB', 'max_rss_GB',  'total_io_read_GB', 'total_io_write_GB',
            'total_cpu_time', 'cpu_perc']
 
 TIME_LIST = ['tottime','cumtime']
@@ -397,17 +397,5 @@ class UsageParser():
                 ax.legend(handles[::-1], labels[::-1], title='Line', loc="lower right")
 
 
-
-        """
-        print (":(")
-        for file in self.time_files:
-            for key in file :
-                ax = fig.add_subplot(n_vars, sample_size, ax_ind)
-
-                #ax.set_xlabel(key)
-                legend(self.group_names[key], loc='lower_right')
-                ax.barh(self.group_names[key], self.group_data[key])
-                ax_ind += 1
-        """
         save_or_show(fig)
 
