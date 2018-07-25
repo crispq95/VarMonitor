@@ -51,12 +51,7 @@ def save_or_show(fig, save_plot=False, plot_file=None):
     if save_plot:
         if plot_file is None:
             raise Exception('File not informed')
-
-        pp = PdfPages(plot_file)
-        plt.savefig(pp, format='pdf')
-        pp.savefig()
-        pp.close()
-        #fig.savefig(plot_file)
+        fig.savefig(plot_file)
     else:
         plt.show()
 
@@ -294,6 +289,7 @@ class UsageParser():
                     ymin = ymax = 4
                     line = mlines.Line2D([xmin,xmax], [ymin,ymax], color='green')
                     ax.add_line(line)
+
 
         save_or_show(fig, save_plot, plot_file)
 
